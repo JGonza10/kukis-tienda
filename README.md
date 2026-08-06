@@ -6,11 +6,12 @@ Tienda en línea de ropa, calzado y accesorios (mujer, hombre, niños y bebé), 
 
 **En desarrollo / prototipo funcional.** El backend expone un flujo de e-commerce completo (catálogo, carrito, pedidos, panel admin) y el frontend ya lo consume, pero hay señales claras de que el proyecto no está listo para producción real:
 
-- El `JWT_SECRET` tiene un valor por defecto inseguro en el código (`main.py`) que debe sustituirse por variable de entorno real.
+- El `JWT_SECRET` ahora es **obligatorio**: la app falla al arrancar con un error claro si la variable de entorno no está configurada (ya no existe un valor por defecto inseguro).
 - El usuario administrador se inserta en `schema.sql` con un hash de contraseña de relleno (`$2b$12$REEMPLAZA_CON_HASH_BCRYPT_REAL`) que debe generarse y actualizarse manualmente.
 - No hay integración de pago real: el método de pago se guarda como dato, pero no existe cobro efectivo con pasarela (PayPal, Stripe, etc.) — está listado como mejora futura en `DEPLOY.md`.
 - No hay subida de imágenes implementada en el backend (las URLs de imágenes se guardan en tabla, pero la integración con Cloudinary es un paso pendiente descrito en `DEPLOY.md`).
-- No se encontraron pruebas automatizadas, `.env.example`, `Procfile` ni configuración de CI en la raíz del proyecto (sí se mencionan en `DEPLOY.md` como parte de una estructura de carpetas `backend/`/`frontend/`/`db/` que hoy no existe; en este repositorio todos los archivos están en la raíz).
+- Ya existe un `.env.example` en la raíz con los nombres de variables de entorno reales (sin valores). No se encontraron pruebas automatizadas, `Procfile` ni configuración de CI en la raíz del proyecto (sí se mencionan en `DEPLOY.md` como parte de una estructura de carpetas `backend/`/`frontend/`/`db/` que hoy no existe; en este repositorio todos los archivos están en la raíz).
+- El frontend (`index.html`) actualmente solo consume `/auth/login`, `/auth/registro` y `/admin/dashboard` de la API; el catálogo y el carrito de la tienda usan datos de demostración (`DEMO_PRODUCTS`) y `localStorage` en vez de los endpoints `/productos`, `/categorias`, `/tallas`, `/carrito` y `/pedidos`, que existen en `main.py` pero aún no están conectados desde el frontend.
 
 ## Características principales
 
@@ -45,7 +46,6 @@ asyncpg==0.29.0
 bcrypt==4.1.3
 pyjwt==2.8.0
 pydantic[email]==2.7.1
-python-multipart==0.0.9
 ```
 
 ## Estructura del proyecto

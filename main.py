@@ -4,7 +4,7 @@ FastAPI + PostgreSQL (Supabase)
 Autor: Juan González Mendoza
 """
 
-from fastapi import FastAPI, HTTPException, Depends, status, Request
+from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from contextlib import asynccontextmanager
@@ -20,7 +20,16 @@ import re
 
 # ─── Configuración ───────────────────────────────────────
 DB_URL     = os.environ.get("DATABASE_URL", "postgresql://user:pass@localhost/kukis")
-JWT_SECRET = os.environ.get("JWT_SECRET", "CAMBIA-ESTO-EN-PRODUCCION-usa-openssl-rand-hex-32")
+
+JWT_SECRET = os.environ.get("JWT_SECRET")
+if not JWT_SECRET:
+    raise RuntimeError(
+        "La variable de entorno JWT_SECRET es obligatoria y no está configurada. "
+        "Genera un valor seguro (por ejemplo: openssl rand -hex 32 o "
+        "python -c \"import secrets; print(secrets.token_hex(32))\") y defínela "
+        "como variable de entorno antes de arrancar la aplicación."
+    )
+
 JWT_EXPIRE = int(os.environ.get("JWT_EXPIRE_HOURS", 24))
 ORIGINS    = os.environ.get("CORS_ORIGINS", "http://localhost,https://kukis-moda.netlify.app").split(",")
 
@@ -79,17 +88,6 @@ class RegistroIn(BaseModel):
 class LoginIn(BaseModel):
     email:    EmailStr
     password: str
-
-class ProductoFiltros(BaseModel):
-    categoria: Optional[str] = None
-    genero:    Optional[str] = None
-    busqueda:  Optional[str] = None
-    min_precio: Optional[float] = None
-    max_precio: Optional[float] = None
-    solo_oferta: bool = False
-    solo_stock:  bool = True
-    pagina:    int = 1
-    por_pagina: int = 20
 
 class AgregarCarritoIn(BaseModel):
     id_variante: str
