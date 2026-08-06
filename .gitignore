@@ -1,0 +1,29 @@
+# Entornos virtuales
+venv/
+.venv/
+env/
+ENV/
+
+# Bytecode / cache de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Variables de entorno / secretos
+.env
+.env.*
+!.env.example
+
+# Distribución / empaquetado
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# Editores / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

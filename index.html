@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kukis – Moda y Estilo</title>
+<meta name="description" content="Tienda de ropa online Kukis Moda y Estilo. Mujer, Hombre, Niños, Calzado y Accesorios.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════ VARIABLES ═══════════════════════════ */
+:root {
+  --azul:    #1A3A5C; --azul-c: #2D6FAB; --azul-l: #E8F0FB;
+  --rosa:    #F48FB1; --rosa-c: #F06292;
+  --naranja: #FF7043; --dora:   #D4A843;
+  --negro:   #1A1A1A; --blanco: #FFFFFF;
+  --gris-f:  #F8F8F8; --gris-b: #E0E0E0; --gris-t: #777;
+  --shadow:  0 4px 24px rgba(0,0,0,.10);
+  --r:       14px; --r-sm: 8px;
+  --tr:      all .28s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--gris-f);color:var(--negro)}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+img{max-width:100%;display:block}
+
+/* ═══════════════════ HEADER ═══════════════════ */
+header{
+  position:sticky;top:0;z-index:100;
+  background:linear-gradient(135deg,var(--azul) 60%,var(--azul-c));
+  box-shadow:0 2px 16px rgba(0,0,0,.18);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:70px;gap:1rem;
+}
+.logo-wrap{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.logo-3d{width:50px;height:50px;animation:rotateLogo 9s linear infinite;transform-style:preserve-3d}
+@keyframes rotateLogo{to{transform:rotateY(360deg) rotateX(8deg)}}
+.logo-3d svg{width:50px;height:50px}
+.brand-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:2px}
+.brand-sub{font-size:.6rem;font-weight:300;color:var(--dora);letter-spacing:3px;text-transform:uppercase}
+
+nav{display:flex;gap:.2rem;flex-wrap:wrap}
+nav button{color:#fff;font-size:.82rem;font-weight:500;padding:.45rem .9rem;border-radius:8px;transition:var(--tr)}
+nav button:hover,nav button.active{background:rgba(255,255,255,.16);color:var(--dora)}
+.cart-btn{position:relative}
+.cart-count{position:absolute;top:2px;right:2px;background:var(--naranja);color:#fff;font-size:.6rem;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+.header-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.icon-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:var(--tr)}
+.icon-btn:hover{background:rgba(255,255,255,.25);color:var(--dora)}
+.user-pill{background:linear-gradient(135deg,var(--rosa),var(--dora));color:#fff;padding:.3rem .9rem;border-radius:20px;font-size:.78rem;font-weight:600;display:none;align-items:center;gap:.4rem}
+
+/* ═══════════════════ PÁGINAS ═══════════════════ */
+.page{display:none}
+.page.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ═══════════════════ HERO ═══════════════════ */
+.hero{
+  min-height:480px;
+  background:linear-gradient(135deg,#FFF0F5 0%,#FFF7E6 45%,#EBF3FD 100%);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:4rem 2rem;position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(244,143,177,.15),transparent 55%),radial-gradient(circle at 20% 80%,rgba(255,112,67,.08),transparent 50%)}
+.hero-content{position:relative;z-index:1;max-width:660px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:900;color:var(--azul);line-height:1.18;margin-bottom:1rem}
+.hero h1 span{color:var(--rosa-c)}
+.hero p{font-size:1.05rem;color:#555;margin-bottom:2rem;font-weight:300}
+.btn-primary{background:linear-gradient(135deg,var(--naranja),var(--dora));color:#fff;padding:.85rem 2.2rem;border-radius:50px;font-weight:600;font-size:.95rem;box-shadow:0 6px 20px rgba(255,112,67,.3);transition:var(--tr);display:inline-block}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(255,112,67,.4)}
+.btn-sec{background:transparent;color:var(--azul);border:2px solid var(--azul);padding:.8rem 1.8rem;border-radius:50px;font-weight:600;transition:var(--tr);display:inline-block;margin-left:.75rem}
+.btn-sec:hover{background:var(--azul);color:#fff}
+
+/* ═══════════════════ SECTION ═══════════════════ */
+.section{padding:2.5rem 2rem;max-width:1200px;margin:0 auto}
+.section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--azul);margin-bottom:.35rem}
+.section-line{width:52px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--rosa-c),var(--dora));margin-bottom:1.75rem}
+
+/* ═══════════════════ CATEGORÍAS ═══════════════════ */
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.9rem}
+.cat-card{background:#fff;border-radius:var(--r);padding:1.3rem .9rem;text-align:center;box-shadow:var(--shadow);cursor:pointer;transition:var(--tr);border:2px solid transparent}
+.cat-card:hover{transform:translateY(-5px);border-color:var(--rosa)}
+.cat-card .cat-icon{font-size:2.2rem;margin-bottom:.5rem}
+.cat-card h3{font-size:.82rem;font-weight:600;color:var(--azul)}
+
+/* ═══════════════════ FILTROS ═══════════════════ */
+.filter-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.4rem;align-items:center}
+.filter-btn{padding:.42rem 1rem;border-radius:30px;font-size:.8rem;font-weight:500;border:1.5px solid var(--gris-b);color:#666;background:#fff;transition:var(--tr)}
+.filter-btn.active,.filter-btn:hover{background:var(--azul);color:#fff;border-color:var(--azul)}
+.search-box{flex:1;max-width:280px;padding:.48rem .95rem;border-radius:30px;border:1.5px solid var(--gris-b);font-family:inherit;font-size:.86rem;outline:none;transition:var(--tr)}
+.search-box:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(45,111,171,.12)}
+
+/* ═══════════════════ PRODUCTOS ═══════════════════ */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.4rem}
+.prod-card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;transition:var(--tr);position:relative;cursor:pointer}
+.prod-card:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(0,0,0,.13)}
+.prod-img{height:210px;display:flex;align-items:center;justify-content:center;font-size:4.5rem;position:relative;overflow:hidden}
+.prod-badge{position:absolute;top:10px;left:10px;background:var(--naranja);color:#fff;font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase}
+.prod-fav{position:absolute;top:10px;right:10px;background:#fff;width:30px;height:30px;border-radius:50%;font-size:.9rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:var(--tr)}
+.prod-fav:hover{transform:scale(1.15)}
+.prod-info{padding:.9rem 1.1rem 1.1rem}
+.prod-cat{font-size:.7rem;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:.25rem}
+.prod-name{font-weight:600;font-size:.95rem;color:var(--negro);margin-bottom:.35rem;line-height:1.3}
+.prod-price-row{display:flex;align-items:center;justify-content:space-between;gap:.4rem;margin-bottom:.6rem}
+.prod-price{font-size:1.2rem;font-weight:700;color:var(--naranja)}
+.prod-old{font-size:.8rem;color:#bbb;text-decoration:line-through}
+
+/* ─── SELECTOR DE TALLAS ─── */
+.prod-tallas{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.7rem;min-height:24px}
+.talla-chip{padding:.22rem .6rem;border-radius:6px;border:1.5px solid var(--gris-b);font-size:.72rem;font-weight:600;cursor:pointer;transition:var(--tr);color:#555;background:#fff}
+.talla-chip:hover{border-color:var(--azul);color:var(--azul)}
+.talla-chip.selected{background:var(--azul);color:#fff;border-color:var(--azul)}
+.talla-chip.sin-stock{opacity:.38;cursor:not-allowed;text-decoration:line-through}
+.prod-color-row{display:flex;gap:.4rem;margin-bottom:.6rem;flex-wrap:wrap}
+.color-dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--gris-b);cursor:pointer;transition:var(--tr);position:relative}
+.color-dot.selected,.color-dot:hover{border-color:var(--azul);transform:scale(1.18)}
+.stock-info{font-size:.72rem;color:#777;margin-bottom:.5rem}
+.stock-info.bajo{color:#ff9800;font-weight:600}
+.stock-info.agotado{color:#f44336;font-weight:600}
+
+.btn-add{width:100%;background:linear-gradient(135deg,var(--rosa-c),var(--naranja));color:#fff;padding:.58rem 1rem;border-radius:30px;font-size:.82rem;font-weight:600;transition:var(--tr)}
+.btn-add:hover{transform:scale(1.03);box-shadow:0 4px 14px rgba(240,98,146,.3)}
+.btn-add:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ═══════════════════ CARRITO ═══════════════════ */
+.cart-container{max-width:900px;margin:0 auto;padding:2rem}
+.cart-header{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--azul);margin-bottom:1.4rem}
+.cart-layout{display:grid;grid-template-columns:1fr 300px;gap:1.4rem}
+.cart-items{display:flex;flex-direction:column;gap:.9rem}
+.cart-item{background:#fff;border-radius:var(--r);padding:.9rem;display:flex;gap:.9rem;align-items:center;box-shadow:var(--shadow)}
+.cart-item-img{font-size:2.2rem;width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:var(--gris-f);border-radius:10px;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-weight:600;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-meta{font-size:.75rem;color:#999;margin:.15rem 0}
+.cart-item-price{font-weight:700;color:var(--naranja);font-size:1rem}
+.qty-ctrl{display:flex;align-items:center;gap:.45rem;margin-top:.4rem}
+.qty-btn{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gris-b);font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--tr)}
+.qty-btn:hover{background:var(--azul);color:#fff;border-color:var(--azul)}
+.qty-num{font-weight:600;min-width:22px;text-align:center;font-size:.9rem}
+.cart-remove{color:#ff5252;font-size:1.1rem;cursor:pointer;transition:var(--tr);padding:.25rem}
+.cart-remove:hover{transform:scale(1.2)}
+.cart-summary{background:#fff;border-radius:var(--r);padding:1.4rem;box-shadow:var(--shadow);position:sticky;top:82px;height:fit-content}
+.summary-title{font-weight:700;font-size:1.1rem;margin-bottom:1rem;color:var(--azul)}
+.summary-row{display:flex;justify-content:space-between;padding:.45rem 0;font-size:.88rem;border-bottom:1px solid var(--gris-b)}
+.summary-total{display:flex;justify-content:space-between;padding:.9rem 0 0;font-weight:700;font-size:1.05rem;color:var(--naranja)}
+.btn-checkout{width:100%;margin-top:.9rem;padding:.85rem;background:linear-gradient(135deg,var(--azul),var(--azul-c));color:#fff;border-radius:var(--r);font-size:.95rem;font-weight:600;transition:var(--tr)}
+.btn-checkout:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(26,58,92,.28)}
+
+/* ═══════════════════ AUTH ═══════════════════ */
+.auth-container{max-width:420px;margin:3rem auto;padding:1.5rem}
+.auth-card{background:#fff;border-radius:var(--r);padding:2.2rem;box-shadow:0 8px 40px rgba(0,0,0,.09)}
+.auth-tabs{display:flex;margin-bottom:1.75rem;border-bottom:2px solid var(--gris-b)}
+.auth-tab{flex:1;padding:.7rem;font-weight:600;font-size:.88rem;color:#999;border-bottom:3px solid transparent;margin-bottom:-2px;transition:var(--tr);cursor:pointer}
+.auth-tab.active{color:var(--azul);border-bottom-color:var(--azul)}
+.auth-form{display:flex;flex-direction:column;gap:.9rem}
+.form-group{display:flex;flex-direction:column;gap:.35rem}
+.form-group label{font-size:.8rem;font-weight:600;color:var(--azul)}
+.form-group input,.form-group select{padding:.68rem .95rem;border:1.5px solid var(--gris-b);border-radius:10px;font-family:inherit;font-size:.88rem;outline:none;transition:var(--tr)}
+.form-group input:focus,.form-group select:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(45,111,171,.10)}
+.btn-submit{padding:.82rem;background:linear-gradient(135deg,var(--azul),var(--naranja));color:#fff;border:none;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:var(--tr);margin-top:.4rem}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,58,92,.25)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.auth-divider{text-align:center;color:#bbb;font-size:.82rem;margin:.4rem 0;position:relative}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--gris-b)}
+.auth-divider::before{left:0}.auth-divider::after{right:0}
+.social-btns{display:flex;gap:.7rem}
+.social-btn{flex:1;padding:.65rem;border:1.5px solid var(--gris-b);border-radius:10px;font-size:.82rem;font-weight:500;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:.45rem}
+.social-btn:hover{background:var(--gris-f)}
+.form-error{color:#f44336;font-size:.78rem;margin-top:.2rem;display:none}
+
+/* ═══════════════════ PAGO ═══════════════════ */
+.payment-container{max-width:740px;margin:0 auto;padding:2rem}
+.payment-steps{display:flex;margin-bottom:1.75rem;border-bottom:1px solid var(--gris-b)}
+.step-item{flex:1;text-align:center;padding:.65rem;font-size:.78rem;font-weight:600;color:#bbb;border-bottom:3px solid transparent;margin-bottom:-1px}
+.step-item.active{color:var(--azul);border-bottom-color:var(--azul)}
+.step-item.done{color:var(--dora);border-bottom-color:var(--dora)}
+.payment-card{background:#fff;border-radius:var(--r);padding:1.75rem;box-shadow:var(--shadow);margin-bottom:1.3rem}
+.pay-methods{display:flex;gap:.9rem;margin-bottom:1.4rem;flex-wrap:wrap}
+.pay-method{flex:1;min-width:110px;padding:1.1rem .9rem;text-align:center;border:2px solid var(--gris-b);border-radius:var(--r);cursor:pointer;transition:var(--tr);font-size:.82rem;font-weight:600}
+.pay-method.selected{border-color:var(--azul);background:var(--azul-l);color:var(--azul)}
+.pay-method .pay-icon{font-size:1.8rem;margin-bottom:.35rem}
+.card-fields{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.card-fields .full{grid-column:1/-1}
+.secure-badge{display:flex;align-items:center;gap:.45rem;color:#4caf50;font-size:.78rem;font-weight:500;margin-top:.9rem}
+
+/* ═══════════════════ ADMIN ═══════════════════ */
+.admin-container{max-width:1100px;margin:0 auto;padding:2rem}
+.admin-grid{display:grid;grid-template-columns:210px 1fr;gap:1.3rem}
+.admin-sidebar{background:var(--azul);border-radius:var(--r);padding:1.3rem;color:#fff;height:fit-content}
+.admin-sidebar h3{font-size:.95rem;font-weight:700;margin-bottom:.9rem;color:var(--dora)}
+.admin-nav{list-style:none;display:flex;flex-direction:column;gap:.2rem}
+.admin-nav li button{width:100%;text-align:left;padding:.6rem .85rem;border-radius:8px;color:rgba(255,255,255,.8);font-size:.82rem;font-weight:500;transition:var(--tr)}
+.admin-nav li button:hover,.admin-nav li button.active{background:rgba(255,255,255,.15);color:#fff}
+.admin-main{background:#fff;border-radius:var(--r);padding:1.4rem;box-shadow:var(--shadow)}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.9rem;margin-bottom:1.75rem}
+.stat-card{border-radius:12px;padding:1.1rem;text-align:center}
+.stat-card:nth-child(1){background:linear-gradient(135deg,var(--azul),var(--azul-c));color:#fff}
+.stat-card:nth-child(2){background:linear-gradient(135deg,var(--rosa-c),var(--rosa));color:#fff}
+.stat-card:nth-child(3){background:linear-gradient(135deg,var(--naranja),var(--dora));color:#fff}
+.stat-card:nth-child(4){background:linear-gradient(135deg,#43a047,#66bb6a);color:#fff}
+.stat-val{font-size:1.6rem;font-weight:700}
+.stat-lbl{font-size:.72rem;opacity:.85;margin-top:.2rem}
+.prod-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.prod-table th{background:var(--gris-f);padding:.7rem .9rem;text-align:left;font-weight:600;color:var(--azul)}
+.prod-table td{padding:.65rem .9rem;border-bottom:1px solid var(--gris-b)}
+.prod-table tr:last-child td{border-bottom:none}
+.prod-table tr:hover td{background:rgba(45,111,171,.04)}
+.status-badge{padding:.22rem .65rem;border-radius:20px;font-size:.7rem;font-weight:600}
+.status-badge.ok{background:#e8f5e9;color:#2e7d32}
+.status-badge.warn{background:#fff3e0;color:#e65100}
+.status-badge.err{background:#fce4ec;color:#c62828}
+
+/* Upload zone */
+.upload-zone{border:2.5px dashed var(--gris-b);border-radius:var(--r);padding:2.2rem;text-align:center;cursor:pointer;transition:var(--tr);background:var(--gris-f)}
+.upload-zone:hover{border-color:var(--azul);background:var(--azul-l)}
+.upload-zone .upload-icon{font-size:2.2rem;margin-bottom:.6rem;color:var(--azul)}
+.add-prod-form{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.add-prod-form .full{grid-column:1/-1}
+
+/* Tallas en admin */
+.tallas-grid-admin{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem}
+.talla-admin-chip{padding:.25rem .65rem;border-radius:6px;border:1.5px solid var(--gris-b);font-size:.72rem;font-weight:500;cursor:pointer;transition:var(--tr)}
+.talla-admin-chip.sel{background:var(--azul);color:#fff;border-color:var(--azul)}
+
+/* ═══════════════════ CONTACTO ═══════════════════ */
+.contact-container{max-width:940px;margin:0 auto;padding:2rem}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem}
+.contact-info{display:flex;flex-direction:column;gap:1.2rem}
+.contact-item{display:flex;align-items:flex-start;gap:.9rem;background:#fff;border-radius:var(--r);padding:1.1rem;box-shadow:var(--shadow);transition:var(--tr)}
+.contact-item:hover{transform:translateX(4px)}
+.contact-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.ci-mail{background:linear-gradient(135deg,#3f51b5,#7986cb)}
+.ci-phone{background:linear-gradient(135deg,#4caf50,#81c784)}
+.ci-wa{background:linear-gradient(135deg,#25d366,#128c7e)}
+.contact-text h4{font-weight:600;color:var(--azul);margin-bottom:.18rem;font-size:.95rem}
+.contact-text p{font-size:.85rem;color:#666}
+.contact-text a{color:var(--azul-c);font-weight:500}
+
+/* Chatbot */
+.chatbot-card{background:#fff;border-radius:var(--r);padding:1.3rem;box-shadow:var(--shadow)}
+.chatbot-header{display:flex;align-items:center;gap:.7rem;margin-bottom:.9rem;padding-bottom:.9rem;border-bottom:1px solid var(--gris-b)}
+.bot-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--rosa));display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.bot-name{font-weight:600;color:var(--azul);font-size:.9rem}
+.bot-status{font-size:.72rem;color:#4caf50}
+.chat-messages{height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:.65rem;margin-bottom:.9rem}
+.chat-msg{max-width:82%}
+.chat-msg.bot{align-self:flex-start}.chat-msg.user{align-self:flex-end}
+.chat-bubble{padding:.6rem .9rem;border-radius:14px;font-size:.82rem;line-height:1.5}
+.bot .chat-bubble{background:var(--gris-f);border-bottom-left-radius:4px}
+.user .chat-bubble{background:linear-gradient(135deg,var(--azul),var(--azul-c));color:#fff;border-bottom-right-radius:4px}
+.quick-replies{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.65rem}
+.quick-reply-btn{padding:.3rem .7rem;border:1px solid var(--gris-b);border-radius:20px;font-size:.75rem;cursor:pointer;background:#fff;transition:var(--tr)}
+.quick-reply-btn:hover{background:var(--azul-l);border-color:var(--azul);color:var(--azul)}
+.chat-input-row{display:flex;gap:.45rem}
+.chat-input{flex:1;padding:.6rem .9rem;border:1.5px solid var(--gris-b);border-radius:30px;font-family:inherit;font-size:.82rem;outline:none;transition:var(--tr)}
+.chat-input:focus{border-color:var(--azul)}
+.chat-send{background:linear-gradient(135deg,var(--azul),var(--naranja));color:#fff;width:38px;height:38px;border-radius:50%;font-size:.95rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--tr)}
+.chat-send:hover{transform:scale(1.1)}
+
+/* ═══════════════════ FOOTER ═══════════════════ */
+footer{background:var(--negro);color:rgba(255,255,255,.68);padding:3rem 2rem 1.4rem;margin-top:3rem}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.75rem;max-width:1200px;margin:0 auto}
+.footer-brand h2{font-family:'Playfair Display',serif;color:#fff;margin-bottom:.45rem}
+.footer-brand p{font-size:.82rem;line-height:1.7}
+.footer-col h4{color:var(--dora);font-size:.85rem;margin-bottom:.9rem;text-transform:uppercase;letter-spacing:1px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.footer-col ul li a{font-size:.82rem;transition:var(--tr)}
+.footer-col ul li a:hover{color:var(--rosa)}
+.footer-bottom{text-align:center;margin-top:1.75rem;padding-top:.9rem;border-top:1px solid rgba(255,255,255,.1);font-size:.78rem}
+
+/* ═══════════════════ TOAST ═══════════════════ */
+.toast{position:fixed;bottom:1.75rem;right:1.75rem;background:var(--negro);color:#fff;padding:.85rem 1.4rem;border-radius:12px;font-size:.85rem;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.2);transform:translateY(80px);opacity:0;transition:var(--tr);z-index:9999;display:flex;align-items:center;gap:.65rem;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ═══════════════════ MODAL ═══════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px);padding:1rem}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:var(--r);padding:1.75rem;max-width:500px;width:100%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:fadeIn .28s ease;max-height:90vh;overflow-y:auto}
+.modal-close{position:absolute;top:.9rem;right:.9rem;font-size:1.3rem;cursor:pointer;color:#999;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:var(--tr)}
+.modal-close:hover{background:var(--gris-f);color:var(--negro)}
+
+/* Spinner de carga */
+.spinner{width:36px;height:36px;border:3px solid var(--gris-b);border-top-color:var(--azul);border-radius:50%;animation:spin .7s linear infinite;margin:2rem auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-msg{text-align:center;color:var(--gris-t);font-size:.9rem}
+.api-error{background:#ffebee;border-radius:10px;padding:1rem;color:#c62828;font-size:.85rem;text-align:center;margin:1rem 0}
+
+/* ═══════════════════ RESPONSIVE ═══════════════════ */
+@media(max-width:768px){
+  header{padding:0 1rem;height:auto;padding:.5rem 1rem}
+  nav{display:none}
+  .cart-layout,.contact-grid,.admin-grid,.add-prod-form,.card-fields{grid-template-columns:1fr}
+  .add-prod-form .full,.card-fields .full{grid-column:auto}
+  .hero{min-height:360px}
+  .btn-sec{margin-left:0;margin-top:.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════ HEADER ══════════════════════════ -->
+<header>
+  <div class="logo-wrap">
+    <div class="logo-3d">
+      <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFD700"/>
+            <stop offset="50%" stop-color="#F48FB1"/>
+            <stop offset="100%" stop-color="#FF7043"/>
+          </linearGradient>
+          <filter id="s3d"><feDropShadow dx="2" dy="3" stdDeviation="2.5" flood-color="rgba(0,0,0,.45)"/></filter>
+        </defs>
+        <polygon points="28,3 50,16 50,40 28,53 6,40 6,16" fill="#1A3A5C" filter="url(#s3d)" opacity=".9"/>
+        <polygon points="28,6 48,18 48,38 28,50 8,38 8,18" fill="url(#g1)" opacity=".88"/>
+        <text x="28" y="34" text-anchor="middle" fill="#1A3A5C" font-family="Playfair Display,serif" font-size="22" font-weight="900">K</text>
+        <circle cx="44" cy="12" r="2.5" fill="white" opacity=".7"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">KUKIS</div>
+      <div class="brand-sub">Moda &amp; Estilo</div>
+    </div>
+  </div>
+
+  <nav>
+    <button class="active" onclick="showPage('tienda')">🛍 Tienda</button>
+    <button onclick="showPage('carrito')" class="cart-btn">
+      🛒 Carrito <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button onclick="showPage('login')" id="navLoginBtn">👤 Mi cuenta</button>
+    <button onclick="showPage('pago')">💳 Pagar</button>
+    <button onclick="showPage('admin')">⚙️ Admin</button>
+    <button onclick="showPage('contacto')">📬 Contacto</button>
+  </nav>
+
+  <div class="header-right">
+    <button class="icon-btn" onclick="showPage('tienda')">🔍</button>
+    <div class="user-pill" id="userPill">
+      <span>👤</span><span id="userName">Usuario</span>
+      <button onclick="logout()" style="margin-left:.35rem;font-size:.75rem;opacity:.8">Salir</button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════ TIENDA ══════════════════════════ -->
+<!-- <div id="page-tienda" class="page active">
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Tu estilo,<br><span>tu identidad</span></h1>
+      <p>Colección exclusiva de moda. Tallas para todos — XS a 4XL, calzado 12 al 30, bebé y plus size.</p>
+      <button class="btn-primary" onclick="scrollToProds()">Ver colección</button>
+      <button class="btn-sec" onclick="showPage('login')">Únete</button>
+    </div>
+  </div> -->
+
+  <div class="section">
+    <h2 class="section-title">Categorías</h2>
+    <div class="section-line"></div>
+    <div class="cats-grid" id="catsGrid">
+      <div class="cat-card" onclick="filterBy('mujer')"><div class="cat-icon">👗</div><h3>Mujer</h3></div>
+      <div class="cat-card" onclick="filterBy('hombre')"><div class="cat-icon">👔</div><h3>Hombre</h3></div>
+      <div class="cat-card" onclick="filterBy('ninas')"><div class="cat-icon">👧</div><h3>Niñas</h3></div>
+      <div class="cat-card" onclick="filterBy('ninos')"><div class="cat-icon">🧒</div><h3>Niños</h3></div>
+      <div class="cat-card" onclick="filterBy('bebe')"><div class="cat-icon">👶</div><h3>Bebé</h3></div>
+      <div class="cat-card" onclick="filterBy('accesorios')"><div class="cat-icon">👜</div><h3>Accesorios</h3></div>
+      <div class="cat-card" onclick="filterBy('calzado-mujer')"><div class="cat-icon">👠</div><h3>Calzado Mujer</h3></div>
+      <div class="cat-card" onclick="filterBy('calzado-hombre')"><div class="cat-icon">👞</div><h3>Calzado Hombre</h3></div>
+      <div class="cat-card" onclick="filterBy('calzado-ninos')"><div class="cat-icon">👟</div><h3>Calzado Niños</h3></div>
+      <div class="cat-card" onclick="filterBy('deportes')"><div class="cat-icon">🏃</div><h3>Deportes</h3></div>
+      <div class="cat-card" onclick="filterBy('plus-size')"><div class="cat-icon">✨</div><h3>Plus Size</h3></div>
+    </div>
+  </div>
+
+  <div class="section" id="prodSection">
+    <h2 class="section-title" id="prodSectionTitle">Productos destacados</h2>
+    <div class="section-line"></div>
+    <div class="filter-bar">
+      <input class="search-box" type="text" placeholder="🔍 Buscar..." id="searchBox" oninput="debounceSearch()">
+      <button class="filter-btn active" onclick="setFilter(this,'')">Todos</button>
+      <button class="filter-btn" onclick="setFilter(this,'mujer')">Mujer</button>
+      <button class="filter-btn" onclick="setFilter(this,'hombre')">Hombre</button>
+      <button class="filter-btn" onclick="setFilter(this,'nino')">Niños</button>
+      <button class="filter-btn" onclick="setFilter(this,'')">Calzado</button>
+      <button class="filter-btn" onclick="setFilterOferta(this)">🔥 Ofertas</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+    <div id="loadMore" style="text-align:center;margin-top:1.5rem;display:none">
+      <button class="btn-primary" onclick="loadNextPage()" style="font-size:.88rem;padding:.7rem 2rem">Cargar más</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ CARRITO ══════════════════════════ -->
+<div id="page-carrito" class="page">
+  <div class="cart-container">
+    <h2 class="cart-header">🛒 Mi carrito</h2>
+    <div id="cartContent"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ LOGIN ══════════════════════════ -->
+<div id="page-login" class="page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <div style="font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;color:var(--azul)">KUKIS</div>
+        <div style="font-size:.72rem;color:var(--dora);letter-spacing:3px">MODA &amp; ESTILO</div>
+      </div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login')">Iniciar sesión</button>
+        <button class="auth-tab" onclick="switchTab('register')">Crear cuenta</button>
+      </div>
+      <!-- LOGIN -->
+      <div id="formLogin" class="auth-form">
+        <div class="form-group">
+          <label>📧 Correo electrónico</label>
+          <input type="email" id="loginEmail" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>🔒 Contraseña</label>
+          <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <div id="loginError" class="api-error" style="display:none"></div>
+        <button class="btn-submit" id="btnLogin" onclick="doLogin()">Iniciar sesión</button>
+        <div class="auth-divider">o continúa con</div>
+        <div class="social-btns">
+          <button class="social-btn" onclick="socialLogin('Google')">🔴 Google</button>
+          <button class="social-btn" onclick="socialLogin('Facebook')">🔵 Facebook</button>
+        </div>
+      </div>
+      <!-- REGISTRO -->
+      <div id="formRegister" class="auth-form" style="display:none">
+        <div class="form-group"><label>👤 Nombre</label><input type="text" id="regNombre" placeholder="Tu nombre" autocomplete="given-name"></div>
+        <div class="form-group"><label>👤 Apellidos</label><input type="text" id="regApellidos" placeholder="Tus apellidos" autocomplete="family-name"></div>
+        <div class="form-group"><label>📧 Correo electrónico</label><input type="email" id="regEmail" placeholder="tucorreo@ejemplo.com" autocomplete="email"></div>
+        <div class="form-group"><label>📱 Teléfono (opcional)</label><input type="tel" id="regTel" placeholder="5512345678"></div>
+        <div class="form-group"><label>🔒 Contraseña</label><input type="password" id="regPass" placeholder="Mín. 8 caracteres, 1 mayúscula y 1 número"></div>
+        <div class="form-group"><label>🔒 Confirmar contraseña</label><input type="password" id="regPass2" placeholder="Repite tu contraseña"></div>
+        <div id="regError" class="api-error" style="display:none"></div>
+        <button class="btn-submit" id="btnReg" onclick="doRegister()">Crear mi cuenta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ PAGO ══════════════════════════ -->
+<div id="page-pago" class="page">
+  <div class="payment-container">
+    <h2 class="cart-header">💳 Checkout</h2>
+    <div class="payment-steps">
+      <div class="step-item done">✓ Carrito</div>
+      <div class="step-item active">2. Envío y pago</div>
+      <div class="step-item">3. Confirmación</div>
+    </div>
+    <div class="payment-card">
+      <h3 style="font-family:'Playfair Display',serif;color:var(--azul);margin-bottom:1.3rem">Dirección de envío</h3>
+      <div class="add-prod-form">
+        <div class="form-group"><label>Nombre del destinatario</label><input type="text" id="payNombre" placeholder="Nombre completo"></div>
+        <div class="form-group"><label>Teléfono de contacto</label><input type="tel" id="payTel" placeholder="5512345678"></div>
+        <div class="form-group full"><label>Calle y número</label><input type="text" id="payCalle" placeholder="Av. Reforma 123 Int 4"></div>
+        <div class="form-group"><label>Colonia</label><input type="text" id="payColonia" placeholder="Col. Centro"></div>
+        <div class="form-group"><label>Ciudad</label><input type="text" id="payCiudad" placeholder="Ciudad de México"></div>
+        <div class="form-group"><label>Estado</label><input type="text" id="payEstado" placeholder="CDMX"></div>
+        <div class="form-group"><label>Código postal</label><input type="text" id="payCP" placeholder="06600" maxlength="5"></div>
+        <div class="form-group"><label>Referencias</label><input type="text" id="payRefs" placeholder="Entre calles, color de fachada..."></div>
+      </div>
+    </div>
+    <div class="payment-card">
+      <h3 style="font-family:'Playfair Display',serif;color:var(--azul);margin-bottom:1.3rem">Método de pago</h3>
+      <div class="pay-methods">
+        <div class="pay-method selected" onclick="selectPay(this,'paypal')"><div class="pay-icon">🅿️</div>PayPal</div>
+        <div class="pay-method" onclick="selectPay(this,'tarjeta_credito')"><div class="pay-icon">💳</div>Tarjeta crédito</div>
+        <div class="pay-method" onclick="selectPay(this,'tarjeta_debito')"><div class="pay-icon">💰</div>Tarjeta débito</div>
+        <div class="pay-method" onclick="selectPay(this,'oxxo')"><div class="pay-icon">🏪</div>OXXO</div>
+        <div class="pay-method" onclick="selectPay(this,'transferencia')"><div class="pay-icon">🏦</div>Transferencia</div>
+      </div>
+      <div id="cardForm">
+        <div class="card-fields">
+          <div class="form-group full"><label>Número de tarjeta</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"></div>
+          <div class="form-group"><label>Titular</label><input type="text" placeholder="Como aparece en la tarjeta"></div>
+          <div class="form-group"><label>Expiración</label><input type="text" placeholder="MM/AA" maxlength="5"></div>
+          <div class="form-group"><label>CVV</label><input type="password" placeholder="•••" maxlength="4"></div>
+        </div>
+        <div class="secure-badge">🔒 Cifrado SSL 256-bit — Pago 100% seguro</div>
+      </div>
+      <div style="margin-top:1.3rem;padding-top:1.3rem;border-top:1px solid var(--gris-b)">
+        <div class="summary-row"><span>Subtotal</span><span id="paySubtotal">$0.00</span></div>
+        <div class="summary-row"><span>Envío</span><span style="color:#4caf50">Gratis 🎁</span></div>
+        <div class="summary-row"><span>IVA (16%)</span><span id="payIva">$0.00</span></div>
+        <div class="summary-total"><span>Total</span><span id="payTotal">$0.00</span></div>
+      </div>
+      <button class="btn-checkout" onclick="processPay()">🔒 Confirmar y pagar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ ADMIN ══════════════════════════ -->
+<div id="page-admin" class="page">
+  <div class="admin-container">
+    <h2 class="cart-header" style="display:flex;align-items:center;gap:.9rem">
+      ⚙️ Panel de administración
+      <span style="font-size:.72rem;background:var(--naranja);color:#fff;padding:3px 10px;border-radius:20px">Admin</span>
+    </h2>
+    <div class="admin-grid">
+      <div class="admin-sidebar">
+        <h3>📊 Menú</h3>
+        <ul class="admin-nav">
+          <li><button class="active" onclick="showAdminSection('dashboard',this)">📈 Dashboard</button></li>
+          <li><button onclick="showAdminSection('productos-admin',this)">👗 Productos</button></li>
+          <li><button onclick="showAdminSection('subir',this)">📦 Subir mercancía</button></li>
+          <li><button onclick="showAdminSection('pedidos-admin',this)">📋 Pedidos</button></li>
+          <li><button onclick="showAdminSection('usuarios-admin',this)">👥 Usuarios</button></li>
+          <li><button onclick="showAdminSection('config',this)">🔧 Config</button></li>
+        </ul>
+      </div>
+      <div class="admin-main">
+
+        <!-- Dashboard -->
+        <div id="admin-dashboard">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--azul);margin-bottom:1rem">Dashboard</h3>
+          <div class="admin-stats" id="dashStats">
+            <div class="stat-card"><div class="stat-val" id="dProd">—</div><div class="stat-lbl">Productos activos</div></div>
+            <div class="stat-card"><div class="stat-val" id="dPedHoy">—</div><div class="stat-lbl">Pedidos hoy</div></div>
+            <div class="stat-card"><div class="stat-val" id="dVentas">—</div><div class="stat-lbl">Ventas del mes</div></div>
+            <div class="stat-card"><div class="stat-val" id="dUsers">—</div><div class="stat-lbl">Clientes</div></div>
+          </div>
+          <div style="background:var(--gris-f);border-radius:var(--r);padding:1.2rem">
+            <h4 style="color:var(--azul);margin-bottom:.75rem;font-size:.95rem">⚠️ Alertas de stock bajo</h4>
+            <table class="prod-table" id="stockAlertTable">
+              <thead><tr><th>SKU</th><th>Producto</th><th>Talla</th><th>Color</th><th>Stock</th><th>Mínimo</th></tr></thead>
+              <tbody id="stockAlertBody"><tr><td colspan="6" style="text-align:center;color:#999;padding:1rem">Cargando...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Productos Admin -->
+        <div id="admin-productos-admin" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+            <h3 style="font-family:'Playfair Display',serif;color:var(--azul)">Gestión de productos</h3>
+            <button class="btn-primary" style="font-size:.8rem;padding:.5rem 1.2rem" onclick="showAdminSection('subir',document.querySelector('.admin-nav li:nth-child(3) button'))">+ Agregar</button>
+          </div>
+          <div id="adminProdContent"><div class="spinner"></div></div>
+        </div>
+
+        <!-- Subir mercancía -->
+        <div id="admin-subir" style="display:none">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--azul);margin-bottom:1.3rem">Subir nueva mercancía</h3>
+          <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📸</div>
+            <p style="font-weight:600;color:var(--azul)">Arrastra imágenes o haz clic</p>
+            <p style="font-size:.78rem;color:#999;margin-top:.25rem">JPG, PNG, WebP — máx. 5MB</p>
+            <input type="file" id="fileInput" hidden accept="image/*" multiple onchange="handleFileUpload(this)">
+          </div>
+          <div id="imgPreviewRow" style="display:flex;gap:.65rem;flex-wrap:wrap;margin-top:.9rem"></div>
+          <div style="height:1.2rem"></div>
+          <div class="add-prod-form">
+            <div class="form-group"><label>Nombre del producto</label><input type="text" id="nProdName" placeholder="Ej: Blusa floral primavera"></div>
+            <div class="form-group"><label>Categoría</label>
+              <select id="nProdCat">
+                <option value="1">Mujer</option><option value="2">Hombre</option>
+                <option value="3">Niñas</option><option value="4">Niños</option>
+                <option value="5">Bebé</option><option value="6">Accesorios</option>
+                <option value="7">Calzado Mujer</option><option value="8">Calzado Hombre</option>
+                <option value="9">Calzado Niños</option><option value="10">Deportes</option>
+                <option value="11">Plus Size</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Género</label>
+              <select id="nProdGen">
+                <option value="mujer">Mujer</option><option value="hombre">Hombre</option>
+                <option value="nino">Niño</option><option value="nina">Niña</option>
+                <option value="unisex">Unisex</option><option value="bebe">Bebé</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Precio normal ($MXN)</label><input type="number" id="nProdPrice" placeholder="0.00" step="0.01"></div>
+            <div class="form-group"><label>Precio oferta ($MXN)</label><input type="number" id="nProdSale" placeholder="Vacío = sin oferta" step="0.01"></div>
+            <div class="form-group"><label>Marca</label><input type="text" id="nProdMarca" placeholder="Opcional"></div>
+            <div class="form-group full"><label>Tallas disponibles (selecciona las que manejas)</label>
+              <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:.5rem" id="tallasSelector">
+                <div>
+                  <div style="font-size:.75rem;font-weight:600;color:var(--gris-t);margin-bottom:.35rem">ROPA ADULTO</div>
+                  <div class="tallas-grid-admin" id="tallas-ropa_adulto"></div>
+                </div>
+                <div>
+                  <div style="font-size:.75rem;font-weight:600;color:var(--gris-t);margin-bottom:.35rem">ROPA NIÑO</div>
+                  <div class="tallas-grid-admin" id="tallas-ropa_nino"></div>
+                </div>
+                <div>
+                  <div style="font-size:.75rem;font-weight:600;color:var(--gris-t);margin-bottom:.35rem">CALZADO ADULTO</div>
+                  <div class="tallas-grid-admin" id="tallas-calzado_adulto"></div>
+                </div>
+                <div>
+                  <div style="font-size:.75rem;font-weight:600;color:var(--gris-t);margin-bottom:.35rem">CALZADO NIÑO</div>
+                  <div class="tallas-grid-admin" id="tallas-calzado_nino"></div>
+                </div>
+                <div>
+                  <div style="font-size:.75rem;font-weight:600;color:var(--gris-t);margin-bottom:.35rem">BEBÉ</div>
+                  <div class="tallas-grid-admin" id="tallas-calzado_bebe"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group"><label>Stock por talla (cantidad)</label><input type="number" id="nProdStock" placeholder="Ej: 10" min="0"></div>
+            <div class="form-group"><label>Color</label><input type="text" id="nProdColor" placeholder="Rosa, Azul marino..."></div>
+            <div class="form-group full"><label>Descripción</label>
+              <textarea id="nProdDesc" rows="3" placeholder="Descripción del producto..." style="padding:.68rem;border:1.5px solid var(--gris-b);border-radius:10px;font-family:inherit;font-size:.88rem;outline:none;resize:vertical"></textarea>
+            </div>
+            <div class="form-group full" style="flex-direction:row;gap:.9rem;justify-content:flex-end">
+              <button class="btn-submit" style="width:auto;padding:.7rem 1.8rem" onclick="addProduct()">💾 Guardar</button>
+              <button style="padding:.7rem 1.4rem;border:1.5px solid var(--gris-b);border-radius:10px;font-family:inherit;font-size:.88rem;cursor:pointer" onclick="clearProductForm()">✕ Cancelar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pedidos Admin -->
+        <div id="admin-pedidos-admin" style="display:none">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--azul);margin-bottom:1rem">Pedidos</h3>
+          <div id="adminPedidosContent"><div class="spinner"></div></div>
+        </div>
+
+        <!-- Usuarios Admin -->
+        <div id="admin-usuarios-admin" style="display:none">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--azul);margin-bottom:1rem">Usuarios registrados</h3>
+          <p style="color:#999;font-size:.88rem">Requiere conexión con la API.</p>
+        </div>
+
+        <!-- Config -->
+        <div id="admin-config" style="display:none">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--azul);margin-bottom:1.3rem">Configuración</h3>
+          <div class="add-prod-form">
+            <div class="form-group full"><label>Nombre de la tienda</label><input value="Kukis Moda y Estilo" type="text"></div>
+            <div class="form-group"><label>Email</label><input value="juangonzamen10@gmail.com" type="email"></div>
+            <div class="form-group"><label>Teléfono</label><input value="5573744800" type="tel"></div>
+            <div class="form-group"><label>Moneda</label><select><option>MXN — Peso Mexicano</option><option>USD — Dólar</option></select></div>
+            <div class="form-group"><label>IVA (%)</label><input value="16" type="number"></div>
+            <div class="form-group full"><label>URL de la API</label><input id="apiUrlInput" placeholder="https://kukis-api.onrender.com" type="url"></div>
+            <div class="form-group full" style="flex-direction:row;gap:.9rem;justify-content:flex-end">
+              <button class="btn-submit" style="width:auto;padding:.7rem 1.8rem" onclick="saveConfig()">💾 Guardar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ CONTACTO ══════════════════════════ -->
+<div id="page-contacto" class="page">
+  <div class="contact-container">
+    <h2 class="cart-header">📬 Contáctanos</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon ci-mail">📧</div>
+          <div class="contact-text">
+            <h4>Correo electrónico</h4>
+            <p><a href="mailto:juangonzamen10@gmail.com">juangonzamen10@gmail.com</a></p>
+            <p style="font-size:.76rem;color:#aaa">Respondemos en menos de 24 h</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon ci-phone">📞</div>
+          <div class="contact-text">
+            <h4>Teléfono</h4>
+            <p><a href="tel:5573744800">55 7374 4800</a></p>
+            <p style="font-size:.76rem;color:#aaa">Lun–Vie 9 am – 7 pm</p>
+          </div>
+        </div>
+        <div class="contact-item" style="cursor:pointer" onclick="window.open('https://wa.me/525573744800?text=Hola!%20Tengo%20una%20pregunta%20sobre%20Kukis%20Moda')">
+          <div class="contact-icon ci-wa">💬</div>
+          <div class="contact-text">
+            <h4>WhatsApp Business</h4>
+            <p style="color:var(--azul-c);font-weight:500">Abrir chat en WhatsApp →</p>
+            <p style="font-size:.76rem;color:#aaa">Asistente 24/7</p>
+          </div>
+        </div>
+      </div>
+      <!-- Chatbot -->
+      <div class="chatbot-card">
+        <div class="chatbot-header">
+          <div class="bot-avatar">🤖</div>
+          <div>
+            <div class="bot-name">Asistente Kukis</div>
+            <div class="bot-status">● En línea ahora</div>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-msg bot"><div class="chat-bubble">¡Hola! 👋 Soy el asistente de Kukis. ¿En qué puedo ayudarte? Puedo orientarte sobre tallas, envíos y devoluciones.</div></div>
+        </div>
+        <div class="quick-replies" id="quickReplies">
+          <button class="quick-reply-btn" onclick="quickReply('¿Cuál es el tiempo de envío?')">📦 Envíos</button>
+          <button class="quick-reply-btn" onclick="quickReply('¿Cómo hago una devolución?')">↩️ Devoluciones</button>
+          <button class="quick-reply-btn" onclick="quickReply('¿Qué tallas manejan?')">📏 Tallas</button>
+          <button class="quick-reply-btn" onclick="quickReply('¿Cuáles son los métodos de pago?')">💳 Pagos</button>
+        </div>
+        <div class="chat-input-row">
+          <input class="chat-input" type="text" id="chatInput" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter')sendChat()">
+          <button class="chat-send" onclick="sendChat()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h2>KUKIS</h2>
+      <p>Moda y estilo para toda la familia. Calidad, tendencia y comodidad en cada prenda.</p>
+    </div>
+    <div class="footer-col"><h4>Tienda</h4><ul>
+      <li><a href="#" onclick="filterBy('mujer')">Mujer</a></li>
+      <li><a href="#" onclick="filterBy('hombre')">Hombre</a></li>
+      <li><a href="#" onclick="filterBy('bebe')">Bebé</a></li>
+      <li><a href="#" onclick="filterBy('plus-size')">Plus Size</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Ayuda</h4><ul>
+      <li><a href="#">Guía de tallas</a></li>
+      <li><a href="#">Envíos y devoluciones</a></li>
+      <li><a href="#">Política de privacidad</a></li>
+      <li><a href="#" onclick="showPage('contacto')">Contacto</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Síguenos</h4><ul>
+      <li><a href="#">📸 Instagram</a></li>
+      <li><a href="#">👥 Facebook</a></li>
+      <li><a href="#">🎵 TikTok</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">© 2025 Kukis Moda y Estilo. Hecho con ❤️ en México.</div>
+</footer>
+
+<!-- Modal producto -->
+<div class="modal-overlay" id="prodModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><span id="toastIcon">✅</span><span id="toastMsg"></span></div>
+
+<script>
+// ════════════════════════════════════════════════
+//  CONFIGURACIÓN API
+// ════════════════════════════════════════════════
+const API_URL = localStorage.getItem('apiUrl') || 'https://kukis-api.onrender.com';
+let authToken = localStorage.getItem('kukis_token') || '';
+let currentUser = JSON.parse(localStorage.getItem('kukis_user') || 'null');
+let selectedPay = 'paypal';
+let cartLocal = JSON.parse(localStorage.getItem('kukis_cart') || '[]');
+let currentPage = 1;
+let currentFilter = {cat:'', genero:'', oferta:false, busqueda:''};
+let searchTimer;
+
+// Tallas del catálogo (fallback sin API)
+const TALLAS_LOCAL = {
+  ropa_adulto:    ['XS','S','M','L','XL','XXL','3XL','4XL','26','28','30','32','34','36'],
+  ropa_nino:      ['2','4','6','8','10','12','14','16'],
+  calzado_adulto: ['22','22.5','23','23.5','24','24.5','25','25.5','26','26.5','27','27.5','28','28.5','29','29.5','30'],
+  calzado_nino:   ['12','13','14','15','16','17','18','19','20','21'],
+  calzado_bebe:   ['6cm','7cm','8cm','9cm','10cm','11cm'],
+};
+
+// Productos locales de demostración
+const DEMO_PRODUCTS = [
+  {id:'1',nombre:'Blusa floral primavera',categoria:'Mujer',genero:'mujer',precio_base:389,precio_oferta:280,icono:'👗',destacado:true,nuevo:true,
+   variantes:[{talla:'S',color:'Rosa',stock:8},{talla:'M',color:'Rosa',stock:12},{talla:'M',color:'Blanco',stock:9},{talla:'L',color:'Rosa',stock:5},{talla:'XL',color:'Rosa',stock:3}]},
+  {id:'2',nombre:'Vestido midi elegante',categoria:'Mujer',genero:'mujer',precio_base:780,precio_oferta:null,icono:'👘',destacado:true,nuevo:false,
+   variantes:[{talla:'XS',color:'Negro',stock:4},{talla:'S',color:'Negro',stock:7},{talla:'M',color:'Negro',stock:5},{talla:'L',color:'Azul',stock:3}]},
+  {id:'3',nombre:'Camisa slim fit Oxford',categoria:'Hombre',genero:'hombre',precio_base:450,precio_oferta:null,icono:'👔',destacado:false,nuevo:true,
+   variantes:[{talla:'S',color:'Azul',stock:6},{talla:'M',color:'Azul',stock:10},{talla:'L',color:'Blanco',stock:8},{talla:'XL',color:'Blanco',stock:5},{talla:'XXL',color:'Gris',stock:3}]},
+  {id:'4',nombre:'Jeans skinny premium',categoria:'Hombre',genero:'hombre',precio_base:695,precio_oferta:550,icono:'👖',destacado:true,nuevo:false,
+   variantes:[{talla:'28',color:'Azul oscuro',stock:5},{talla:'30',color:'Azul oscuro',stock:9},{talla:'32',color:'Azul oscuro',stock:11},{talla:'34',color:'Negro',stock:6}]},
+  {id:'5',nombre:'Conjunto niña flores',categoria:'Niñas',genero:'nina',precio_base:320,precio_oferta:null,icono:'👧',destacado:false,nuevo:true,
+   variantes:[{talla:'4',color:'Rosa',stock:6},{talla:'6',color:'Rosa',stock:8},{talla:'8',color:'Rosa',stock:5},{talla:'10',color:'Lila',stock:4}]},
+  {id:'6',nombre:'Playera deportiva niño',categoria:'Niños',genero:'nino',precio_base:195,precio_oferta:null,icono:'⚽',destacado:false,nuevo:true,
+   variantes:[{talla:'6',color:'Azul',stock:10},{talla:'8',color:'Azul',stock:8},{talla:'10',color:'Rojo',stock:7},{talla:'12',color:'Rojo',stock:4}]},
+  {id:'7',nombre:'Pijama bebé algodón',categoria:'Bebé',genero:'bebe',precio_base:280,precio_oferta:null,icono:'👶',destacado:false,nuevo:true,
+   variantes:[{talla:'6cm',color:'Amarillo',stock:8},{talla:'7cm',color:'Verde',stock:6},{talla:'9cm',color:'Rosa',stock:5},{talla:'11cm',color:'Azul',stock:4}]},
+  {id:'8',nombre:'Bolsa tote cuero',categoria:'Accesorios',genero:'mujer',precio_base:580,precio_oferta:420,icono:'👜',destacado:true,nuevo:false,
+   variantes:[{talla:'UNICA',color:'Café',stock:5},{talla:'UNICA',color:'Negro',stock:7}]},
+  {id:'9',nombre:'Zapatillas tenis mujer',categoria:'Calzado Mujer',genero:'mujer',precio_base:890,precio_oferta:720,icono:'👟',destacado:true,nuevo:true,
+   variantes:[{talla:'23',color:'Blanco',stock:4},{talla:'23.5',color:'Blanco',stock:6},{talla:'24',color:'Rosa',stock:5},{talla:'24.5',color:'Rosa',stock:3},{talla:'25',color:'Blanco',stock:5}]},
+  {id:'10',nombre:'Tacones fiesta dorados',categoria:'Calzado Mujer',genero:'mujer',precio_base:650,precio_oferta:null,icono:'👠',destacado:false,nuevo:true,
+   variantes:[{talla:'23',color:'Dorado',stock:3},{talla:'23.5',color:'Dorado',stock:4},{talla:'24',color:'Dorado',stock:5},{talla:'24.5',color:'Dorado',stock:2}]},
+  {id:'11',nombre:'Tenis urbanos hombre',categoria:'Calzado Hombre',genero:'hombre',precio_base:750,precio_oferta:620,icono:'👞',destacado:true,nuevo:true,
+   variantes:[{talla:'26',color:'Negro',stock:5},{talla:'26.5',color:'Negro',stock:4},{talla:'27',color:'Café',stock:6},{talla:'27.5',color:'Blanco',stock:3},{talla:'28',color:'Gris',stock:4}]},
+  {id:'12',nombre:'Blusa plus size floral',categoria:'Plus Size',genero:'mujer',precio_base:420,precio_oferta:null,icono:'✨',destacado:false,nuevo:true,
+   variantes:[{talla:'XL',color:'Rosa',stock:5},{talla:'XXL',color:'Rosa',stock:6},{talla:'3XL',color:'Rosa',stock:4},{talla:'4XL',color:'Azul',stock:3}]},
+  {id:'13',nombre:'Pants jogger hombre',categoria:'Deportes',genero:'hombre',precio_base:355,precio_oferta:null,icono:'🏃',destacado:false,nuevo:false,
+   variantes:[{talla:'M',color:'Gris',stock:8},{talla:'L',color:'Gris',stock:10},{talla:'XL',color:'Negro',stock:7},{talla:'XXL',color:'Negro',stock:4}]},
+];
+
+function prodBg(cat){
+  const m={Mujer:'linear-gradient(135deg,#fce4ec,#f8bbd0)',Hombre:'linear-gradient(135deg,#e3f2fd,#bbdefb)',Niñas:'linear-gradient(135deg,#fce4ec,#f8bbd0)',Niños:'linear-gradient(135deg,#fff8e1,#ffe082)',Bebé:'linear-gradient(135deg,#f3e5f5,#e1bee7)','Calzado Mujer':'linear-gradient(135deg,#fff3e0,#ffcc80)','Calzado Hombre':'linear-gradient(135deg,#e8f5e9,#a5d6a7)','Calzado Niños':'linear-gradient(135deg,#e3f2fd,#90caf9)',Accesorios:'linear-gradient(135deg,#f3e5f5,#ce93d8)',Deportes:'linear-gradient(135deg,#e0f2f1,#80cbc4)','Plus Size':'linear-gradient(135deg,#fce4ec,#f48fb1)'};
+  return m[cat]||'#f0f0f0';
+}
+
+// ════════════════════════════════════════════════
+//  NAVEGACIÓN
+// ════════════════════════════════════════════════
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  if(page==='carrito') renderCart();
+  if(page==='pago')    updatePayTotals();
+  if(page==='admin'){loadDashboard();initTallasAdmin();}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function scrollToProds(){
+  showPage('tienda');
+  setTimeout(()=>document.getElementById('prodSection').scrollIntoView({behavior:'smooth'}),100);
+}
+
+// ════════════════════════════════════════════════
+//  PRODUCTOS — render con tallas
+// ════════════════════════════════════════════════
+function renderProducts(list){
+  const grid=document.getElementById('productsGrid');
+  if(!list.length){grid.innerHTML='<p style="color:#999;padding:2rem;grid-column:1/-1">No se encontraron productos.</p>';return;}
+  grid.innerHTML=list.map(p=>{
+    // agrupar colores únicos
+    const colores=[...new Set((p.variantes||[]).map(v=>v.color).filter(Boolean))];
+    // tallas con stock
+    const tallasStock=(p.variantes||[]).reduce((acc,v)=>{
+      if(!acc[v.talla]) acc[v.talla]=0;
+      acc[v.talla]+=v.stock;
+      return acc;
+    },{});
+    const tallasList=Object.entries(tallasStock);
+    const hayStock=tallasList.some(([,s])=>s>0);
+
+    return `
+    <div class="prod-card" onclick="openProdModal('${p.id}')">
+      <div class="prod-img" style="background:${prodBg(p.categoria)}">
+        ${p.precio_oferta?'<span class="prod-badge">Oferta</span>':p.nuevo?'<span class="prod-badge" style="background:var(--azul)">Nuevo</span>':''}
+        <button class="prod-fav" onclick="event.stopPropagation();toggleFav(this)" title="Favorito">♡</button>
+        <span style="font-size:3.8rem">${p.icono||'👗'}</span>
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">${p.categoria}</div>
+        <div class="prod-name">${p.nombre}</div>
+        <!-- TALLAS -->
+        <div class="prod-tallas">
+          ${tallasList.slice(0,6).map(([t,s])=>`
+            <span class="talla-chip ${s===0?'sin-stock':''}" title="${s} piezas disponibles">${t}</span>
+          `).join('')}
+          ${tallasList.length>6?`<span style="font-size:.68rem;color:#999;align-self:center">+${tallasList.length-6}</span>`:''}
+        </div>
+        <!-- COLORES -->
+        ${colores.length>1?`<div class="prod-color-row">${colores.slice(0,5).map(c=>`<div class="color-dot" title="${c}" style="background:${colorToHex(c)}" onclick="event.stopPropagation()"></div>`).join('')}</div>`:''}
+        <div class="prod-price-row">
+          <div>
+            <span class="prod-price">$${(p.precio_oferta||p.precio_base).toFixed(2)}</span>
+            ${p.precio_oferta?`<span class="prod-old">$${p.precio_base.toFixed(2)}</span>`:''}
+          </div>
+        </div>
+        <button class="btn-add ${!hayStock?'disabled':''}" onclick="event.stopPropagation();addToCartLocal('${p.id}')" ${!hayStock?'disabled':''}>
+          ${hayStock?'+ Agregar al carrito':'Agotado'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function colorToHex(name){
+  const m={Rosa:'#F48FB1',Blanco:'#FFFFFF',Negro:'#1A1A1A',Azul:'#2D6FAB','Azul oscuro':'#1A237E',Gris:'#9E9E9E',Rojo:'#F44336',Verde:'#4CAF50',Dorado:'#D4A843',Café:'#795548',Lila:'#CE93D8',Amarillo:'#FFEB3B'};
+  return m[name]||'#ccc';
+}
+
+function setFilter(btn,val){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter.genero=val;currentFilter.oferta=false;currentPage=1;
+  renderProducts(filteredProducts());
+}
+function setFilterOferta(btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter.oferta=true;currentPage=1;
+  renderProducts(filteredProducts());
+}
+function filterBy(slug){
+  currentFilter.cat=slug;currentFilter.oferta=false;currentPage=1;
+  showPage('tienda');
+  setTimeout(()=>{
+    document.getElementById('prodSection').scrollIntoView({behavior:'smooth'});
+    renderProducts(filteredProducts());
+  },100);
+}
+function debounceSearch(){
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{
+    currentFilter.busqueda=document.getElementById('searchBox').value.toLowerCase();
+    renderProducts(filteredProducts());
+  },300);
+}
+function filteredProducts(){
+  let list=[...DEMO_PRODUCTS];
+  const {cat,genero,oferta,busqueda}=currentFilter;
+  if(oferta) list=list.filter(p=>p.precio_oferta);
+  if(genero) list=list.filter(p=>p.genero===genero);
+  if(busqueda) list=list.filter(p=>p.nombre.toLowerCase().includes(busqueda)||p.categoria.toLowerCase().includes(busqueda));
+  return list;
+}
+
+// ════════════════════════════════════════════════
+//  MODAL PRODUCTO (con selector de talla+color)
+// ════════════════════════════════════════════════
+let selectedTalla=null,selectedColor=null,modalProd=null;
+
+function openProdModal(id){
+  const p=DEMO_PRODUCTS.find(x=>x.id===id);
+  if(!p)return;
+  modalProd=p;selectedTalla=null;selectedColor=null;
+  const tallaMap=(p.variantes||[]).reduce((acc,v)=>{if(!acc[v.talla])acc[v.talla]=0;acc[v.talla]+=v.stock;return acc},{});
+  const colores=[...new Set((p.variantes||[]).map(v=>v.color).filter(Boolean))];
+  const descPct=p.precio_oferta?Math.round((1-p.precio_oferta/p.precio_base)*100):0;
+
+  document.getElementById('modalContent').innerHTML=`
+    <div style="text-align:center;font-size:4.5rem;background:${prodBg(p.categoria)};border-radius:12px;padding:1.4rem;margin-bottom:1rem">${p.icono}</div>
+    <div style="font-size:.72rem;color:#999;text-transform:uppercase;letter-spacing:1px">${p.categoria}</div>
+    <h3 style="font-family:'Playfair Display',serif;color:var(--azul);font-size:1.4rem;margin:.3rem 0">${p.nombre}</h3>
+    <div style="display:flex;align-items:center;gap:.75rem;margin:.6rem 0 1rem">
+      <span style="font-size:1.5rem;font-weight:700;color:var(--naranja)">$${(p.precio_oferta||p.precio_base).toFixed(2)}</span>
+      ${p.precio_oferta?`<span style="color:#bbb;text-decoration:line-through;font-size:.9rem">$${p.precio_base.toFixed(2)}</span><span style="background:#fff3e0;color:var(--naranja);padding:.2rem .6rem;border-radius:20px;font-size:.72rem;font-weight:700">${descPct}% OFF</span>`:''}
+    </div>
+
+    <!-- Selector talla -->
+    <div style="margin-bottom:.9rem">
+      <div style="font-size:.78rem;font-weight:700;color:var(--azul);margin-bottom:.45rem">TALLA <span id="modalTallaSelLabel" style="color:var(--naranja)"></span></div>
+      <div id="modalTallas" style="display:flex;gap:.4rem;flex-wrap:wrap">
+        ${Object.entries(tallaMap).map(([t,s])=>`
+          <button class="talla-chip ${s===0?'sin-stock':''}" onclick="${s>0?`selectModalTalla('${t}',this)`:''}" title="${s} disponibles">${t}</button>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Selector color -->
+    ${colores.length>0?`
+    <div style="margin-bottom:.9rem">
+      <div style="font-size:.78rem;font-weight:700;color:var(--azul);margin-bottom:.45rem">COLOR <span id="modalColorSelLabel" style="color:var(--naranja)"></span></div>
+      <div id="modalColores" style="display:flex;gap:.5rem;flex-wrap:wrap">
+        ${colores.map(c=>`
+          <div onclick="selectModalColor('${c}',this)" title="${c}"
+               style="display:flex;align-items:center;gap:.35rem;padding:.3rem .75rem;border-radius:20px;border:2px solid var(--gris-b);cursor:pointer;font-size:.78rem;transition:var(--tr)">
+            <div style="width:16px;height:16px;border-radius:50%;background:${colorToHex(c)};border:1px solid #ddd"></div>${c}
+          </div>
+        `).join('')}
+      </div>
+    </div>`:''}
+
+    <div id="modalStock" class="stock-info"></div>
+    <div style="display:flex;gap:.75rem;margin-top:.75rem">
+      <button id="modalAddBtn" class="btn-add" style="flex:1;padding:.82rem;font-size:.9rem" onclick="addToCartFromModal()" disabled>Selecciona talla y color</button>
+      <button onclick="closeModal()" style="padding:.82rem 1rem;border:2px solid var(--gris-b);border-radius:30px;font-family:inherit;font-size:.88rem;cursor:pointer">✕</button>
+    </div>
+  `;
+  document.getElementById('prodModal').classList.add('show');
+}
+
+function selectModalTalla(talla,el){
+  selectedTalla=talla;
+  document.querySelectorAll('#modalTallas .talla-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('modalTallaSelLabel').textContent='— '+talla;
+  updateModalBtn();
+}
+function selectModalColor(color,el){
+  selectedColor=color;
+  document.querySelectorAll('#modalColores div').forEach(c=>{c.style.borderColor='var(--gris-b)';c.style.background='';});
+  el.style.borderColor='var(--azul)';el.style.background='var(--azul-l)';
+  document.getElementById('modalColorSelLabel').textContent='— '+color;
+  updateModalBtn();
+}
+function updateModalBtn(){
+  const btn=document.getElementById('modalAddBtn');
+  const stockEl=document.getElementById('modalStock');
+  if(!selectedTalla){btn.textContent='Selecciona talla';btn.disabled=true;return;}
+  if(!selectedColor&&modalProd.variantes.some(v=>v.color)){btn.textContent='Selecciona color';btn.disabled=true;return;}
+  const v=modalProd.variantes.find(x=>x.talla===selectedTalla&&(!selectedColor||x.color===selectedColor));
+  if(!v){btn.textContent='Combinación no disponible';btn.disabled=true;return;}
+  if(v.stock===0){btn.textContent='Agotado en esta talla/color';btn.disabled=true;stockEl.textContent='Sin stock en esta combinación';stockEl.className='stock-info agotado';return;}
+  btn.textContent=`🛒 Agregar — ${v.stock} ${v.stock<=3?'(¡últimas piezas!)':'piezas disponibles'}`;
+  btn.disabled=false;
+  stockEl.textContent=v.stock<=v.stock_minimo?`⚠️ ¡Solo ${v.stock} disponibles!`:`${v.stock} piezas en stock`;
+  stockEl.className=`stock-info${v.stock<=3?' bajo':''}`;
+}
+function addToCartFromModal(){
+  if(!selectedTalla)return;
+  addToCartLocal(modalProd.id,selectedTalla,selectedColor);
+  closeModal();
+}
+function closeModal(){document.getElementById('prodModal').classList.remove('show');}
+document.getElementById('prodModal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+
+// ════════════════════════════════════════════════
+//  CARRITO LOCAL
+// ════════════════════════════════════════════════
+function addToCartLocal(id,talla,color){
+  const p=DEMO_PRODUCTS.find(x=>x.id===id);
+  if(!p)return;
+  const key=`${id}_${talla||'UNICA'}_${color||''}`;
+  const ex=cartLocal.find(x=>x.key===key);
+  if(ex){ex.qty=Math.min(ex.qty+1,10);}
+  else{
+    cartLocal.push({key,id,nombre:p.nombre,categoria:p.categoria,icono:p.icono,precio:p.precio_oferta||p.precio_base,talla:talla||'Única',color,qty:1});
+  }
+  saveCart();updateCartCount();
+  showToast(`✅ ${p.nombre} (${talla||'Única'}) agregado`);
+}
+function saveCart(){localStorage.setItem('kukis_cart',JSON.stringify(cartLocal));}
+function updateCartCount(){
+  const t=cartLocal.reduce((s,x)=>s+x.qty,0);
+  document.getElementById('cartCount').textContent=t;
+}
+function renderCart(){
+  const el=document.getElementById('cartContent');
+  if(!cartLocal.length){
+    el.innerHTML=`<div style="text-align:center;padding:4rem 2rem"><div style="font-size:4rem">🛒</div><h3 style="color:var(--azul);margin:1rem 0">Tu carrito está vacío</h3><p style="color:#999;margin-bottom:1.5rem">Agrega productos desde la tienda</p><button class="btn-primary" onclick="showPage('tienda')">Ir a la tienda</button></div>`;
+    return;
+  }
+  const sub=cartLocal.reduce((s,x)=>s+x.precio*x.qty,0);
+  el.innerHTML=`
+    <div class="cart-layout">
+      <div class="cart-items">
+        ${cartLocal.map(item=>`
+          <div class="cart-item">
+            <div class="cart-item-img">${item.icono}</div>
+            <div class="cart-item-info">
+              <div class="cart-item-name">${item.nombre}</div>
+              <div class="cart-item-meta">Talla: <strong>${item.talla}</strong> ${item.color?'• Color: <strong>'+item.color+'</strong>':''}</div>
+              <div class="cart-item-price">$${(item.precio*item.qty).toFixed(2)}</div>
+              <div class="qty-ctrl">
+                <button class="qty-btn" onclick="changeQty('${item.key}',-1)">−</button>
+                <span class="qty-num">${item.qty}</span>
+                <button class="qty-btn" onclick="changeQty('${item.key}',1)">+</button>
+              </div>
+            </div>
+            <button class="cart-remove" onclick="removeFromCart('${item.key}')">🗑</button>
+          </div>
+        `).join('')}
+      </div>
+      <div class="cart-summary">
+        <div class="summary-title">Resumen del pedido</div>
+        <div class="summary-row"><span>Artículos (${cartLocal.reduce((s,x)=>s+x.qty,0)})</span><span>$${sub.toFixed(2)}</span></div>
+        <div class="summary-row"><span>Envío</span><span style="color:#4caf50">Gratis 🎁</span></div>
+        <div class="summary-total"><span>Total</span><span>$${sub.toFixed(2)}</span></div>
+        <button class="btn-checkout" onclick="showPage('pago')">💳 Pagar ahora</button>
+        <button style="width:100%;margin-top:.5rem;padding:.72rem;border:1.5px solid var(--gris-b);border-radius:var(--r);font-family:inherit;font-size:.88rem;cursor:pointer" onclick="showPage('tienda')">← Seguir comprando</button>
+      </div>
+    </div>`;
+}
+function changeQty(key,d){
+  const item=cartLocal.find(x=>x.key===key);
+  if(!item)return;
+  item.qty+=d;
+  if(item.qty<=0)cartLocal=cartLocal.filter(x=>x.key!==key);
+  saveCart();updateCartCount();renderCart();
+}
+function removeFromCart(key){
+  cartLocal=cartLocal.filter(x=>x.key!==key);
+  saveCart();updateCartCount();renderCart();
+}
+
+// ════════════════════════════════════════════════
+//  AUTH
+// ════════════════════════════════════════════════
+function switchTab(tab){
+  event.target.closest('.auth-tabs').querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('formLogin').style.display=tab==='login'?'flex':'none';
+  document.getElementById('formRegister').style.display=tab==='register'?'flex':'none';
+}
+async function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  const errEl=document.getElementById('loginError');
+  errEl.style.display='none';
+  if(!email||!pass){errEl.textContent='Completa todos los campos';errEl.style.display='block';return;}
+  const btn=document.getElementById('btnLogin');
+  btn.textContent='Verificando...';btn.disabled=true;
+  try{
+    const res=await apiFetch('/auth/login',{method:'POST',body:{email,password:pass}});
+    authToken=res.token;
+    currentUser={nombre:res.nombre,rol:res.rol};
+    localStorage.setItem('kukis_token',authToken);
+    localStorage.setItem('kukis_user',JSON.stringify(currentUser));
+    updateUserUI();
+    showToast(`✅ Bienvenido, ${res.nombre.split(' ')[0]}!`);
+    showPage('tienda');
+  }catch(e){
+    errEl.textContent=e.message||'Credenciales incorrectas';errEl.style.display='block';
+  }finally{btn.textContent='Iniciar sesión';btn.disabled=false;}
+}
+async function doRegister(){
+  const nombre=document.getElementById('regNombre').value.trim();
+  const apellidos=document.getElementById('regApellidos').value.trim();
+  const email=document.getElementById('regEmail').value.trim();
+  const tel=document.getElementById('regTel').value.trim();
+  const pass=document.getElementById('regPass').value;
+  const pass2=document.getElementById('regPass2').value;
+  const errEl=document.getElementById('regError');
+  errEl.style.display='none';
+  if(!nombre||!email||!pass){errEl.textContent='Nombre, email y contraseña son requeridos';errEl.style.display='block';return;}
+  if(pass!==pass2){errEl.textContent='Las contraseñas no coinciden';errEl.style.display='block';return;}
+  const btn=document.getElementById('btnReg');
+  btn.textContent='Creando cuenta...';btn.disabled=true;
+  try{
+    const res=await apiFetch('/auth/registro',{method:'POST',body:{nombre,apellidos,email,telefono:tel,password:pass}});
+    authToken=res.token;currentUser={nombre:res.nombre,rol:res.rol};
+    localStorage.setItem('kukis_token',authToken);
+    localStorage.setItem('kukis_user',JSON.stringify(currentUser));
+    updateUserUI();
+    showToast(`🎉 ¡Cuenta creada! Bienvenido, ${res.nombre.split(' ')[0]}.`);
+    showPage('tienda');
+  }catch(e){errEl.textContent=e.message||'Error al crear la cuenta';errEl.style.display='block';}
+  finally{btn.textContent='Crear mi cuenta';btn.disabled=false;}
+}
+function socialLogin(prov){
+  // Simulado — requiere OAuth real
+  currentUser={nombre:prov+' User',rol:'cliente'};
+  updateUserUI();showToast(`✅ Sesión con ${prov}`);showPage('tienda');
+}
+function logout(){
+  authToken='';currentUser=null;
+  localStorage.removeItem('kukis_token');localStorage.removeItem('kukis_user');
+  updateUserUI();showToast('👋 Sesión cerrada');showPage('tienda');
+}
+function updateUserUI(){
+  const pill=document.getElementById('userPill');
+  if(currentUser){
+    document.getElementById('userName').textContent=currentUser.nombre.split(' ')[0];
+    pill.style.display='flex';
+    document.getElementById('navLoginBtn').textContent='👤 '+currentUser.nombre.split(' ')[0];
+  }else{
+    pill.style.display='none';
+    document.getElementById('navLoginBtn').textContent='👤 Mi cuenta';
+  }
+}
+
+// ════════════════════════════════════════════════
+//  PAGO
+// ════════════════════════════════════════════════
+function selectPay(el,m){
+  document.querySelectorAll('.pay-method').forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');selectedPay=m;
+  document.getElementById('cardForm').style.display=(m==='tarjeta_credito'||m==='tarjeta_debito')?'block':'none';
+}
+function formatCard(i){let v=i.value.replace(/\D/g,'').substring(0,16);i.value=v.replace(/(.{4})/g,'$1 ').trim();}
+function updatePayTotals(){
+  const sub=cartLocal.reduce((s,x)=>s+x.precio*x.qty,0);
+  const iva=sub*.16;
+  document.getElementById('paySubtotal').textContent='$'+sub.toFixed(2);
+  document.getElementById('payIva').textContent='$'+iva.toFixed(2);
+  document.getElementById('payTotal').textContent='$'+(sub+iva).toFixed(2);
+}
+async function processPay(){
+  if(!cartLocal.length){showToast('⚠️ Tu carrito está vacío','#ff9800');return;}
+  const btn=document.querySelector('#page-pago .btn-checkout');
+  btn.textContent='Procesando...';btn.disabled=true;
+  await new Promise(r=>setTimeout(r,1800));
+  cartLocal=[];saveCart();updateCartCount();
+  showToast('🎉 ¡Pedido confirmado! Revisa tu correo.');
+  document.getElementById('page-pago').innerHTML=`
+    <div style="text-align:center;padding:5rem 2rem">
+      <div style="font-size:5rem">🎊</div>
+      <h2 style="font-family:'Playfair Display',serif;color:var(--azul);margin:1rem 0">¡Pedido confirmado!</h2>
+      <p style="color:#666;max-width:380px;margin:0 auto 2rem">Recibirás un correo de confirmación en breve. Gracias por comprar en Kukis.</p>
+      <button class="btn-primary" onclick="location.reload()">Seguir comprando</button>
+    </div>`;
+}
+
+// ════════════════════════════════════════════════
+//  ADMIN
+// ════════════════════════════════════════════════
+function showAdminSection(sec,btn){
+  document.querySelectorAll('[id^="admin-"]').forEach(el=>el.style.display='none');
+  document.getElementById('admin-'+sec).style.display='block';
+  document.querySelectorAll('.admin-nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+async function loadDashboard(){
+  try{
+    const d=await apiFetch('/admin/dashboard');
+    document.getElementById('dProd').textContent=d.productos;
+    document.getElementById('dPedHoy').textContent=d.pedidos_hoy;
+    document.getElementById('dVentas').textContent='$'+Number(d.ventas_mes).toLocaleString('es-MX');
+    document.getElementById('dUsers').textContent=d.usuarios;
+    const body=document.getElementById('stockAlertBody');
+    body.innerHTML=d.alerta_stock.length
+      ?d.alerta_stock.map(r=>`<tr><td>${r.sku_variante}</td><td>${r.producto}</td><td>${r.talla}</td><td>${r.color||'—'}</td><td><span class="status-badge ${r.stock===0?'err':'warn'}">${r.stock}</span></td><td>${r.stock_minimo}</td></tr>`).join('')
+      :'<tr><td colspan="6" style="text-align:center;color:#4caf50;padding:.75rem">✅ Todo el stock en niveles normales</td></tr>';
+  }catch{
+    // Sin API — demo
+    document.getElementById('dProd').textContent=DEMO_PRODUCTS.length;
+    document.getElementById('dPedHoy').textContent=3;
+    document.getElementById('dVentas').textContent='$12,480';
+    document.getElementById('dUsers').textContent=47;
+    document.getElementById('stockAlertBody').innerHTML='<tr><td colspan="6" style="text-align:center;color:#999;font-size:.82rem">Conecta la API para ver alertas reales</td></tr>';
+  }
+}
+function initTallasAdmin(){
+  Object.entries(TALLAS_LOCAL).forEach(([tipo,lista])=>{
+    const el=document.getElementById('tallas-'+tipo);
+    if(!el)return;
+    el.innerHTML=lista.map(t=>`
+      <button type="button" class="talla-admin-chip" onclick="this.classList.toggle('sel')" data-talla="${t}">${t}</button>
+    `).join('');
+  });
+}
+function addProduct(){
+  const name=document.getElementById('nProdName').value.trim();
+  const price=parseFloat(document.getElementById('nProdPrice').value)||0;
+  if(!name||!price){showToast('⚠️ Nombre y precio son requeridos','#ff9800');return;}
+  const selected=document.querySelectorAll('.talla-admin-chip.sel');
+  if(selected.length===0){showToast('⚠️ Selecciona al menos una talla','#ff9800');return;}
+  const tallas=[...selected].map(el=>el.dataset.talla);
+  showToast(`✅ Producto "${name}" guardado con tallas: ${tallas.join(', ')}`);
+  clearProductForm();
+}
+function clearProductForm(){
+  ['nProdName','nProdPrice','nProdSale','nProdMarca','nProdColor','nProdStock','nProdDesc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.querySelectorAll('.talla-admin-chip.sel').forEach(el=>el.classList.remove('sel'));
+}
+function handleFileUpload(input){
+  const row=document.getElementById('imgPreviewRow');row.innerHTML='';
+  Array.from(input.files).forEach(file=>{
+    const r=new FileReader();
+    r.onload=e=>{const img=document.createElement('img');img.src=e.target.result;img.style.cssText='width:80px;height:80px;object-fit:cover;border-radius:10px;border:2px solid var(--gris-b)';row.appendChild(img);};
+    r.readAsDataURL(file);
+  });
+}
+function saveConfig(){
+  const url=document.getElementById('apiUrlInput').value.trim();
+  if(url){localStorage.setItem('apiUrl',url);showToast('✅ URL de API guardada: '+url);}
+  else showToast('✅ Configuración guardada');
+}
+
+// ════════════════════════════════════════════════
+//  CHATBOT
+// ════════════════════════════════════════════════
+const BOT={
+  'envío':   '📦 Envíos en 3-5 días hábiles. Gratis en pedidos mayores a $800. Rastreo por WhatsApp.',
+  'devolución':'↩️ Tienes 30 días para devolver cualquier artículo sin usar con etiqueta. Escríbenos al WhatsApp.',
+  'talla':   '📏 Manejamos tallas XS a 4XL en ropa adulto, 2 a 16 en niños, 12 a 30 en calzado adulto, y tallas de bebé. Cada producto tiene selector de talla con disponibilidad en tiempo real.',
+  'pago':    '💳 Aceptamos PayPal, tarjetas Visa/MC/AMEX, OXXO y transferencia bancaria. Todo cifrado SSL.',
+  'hola':    '¡Hola! 😊 ¿Cómo puedo ayudarte hoy?',
+  'precio':  '💰 Nuestros precios van desde $195 hasta $890 MXN. Revisa la sección de Ofertas para descuentos del día.',
+  'gracias': '🌸 ¡Con gusto! Estamos para servirte. ¿Algo más en que pueda ayudarte?',
+  'default': '¡Gracias por escribir! 😊 Un asesor de Kukis te contactará pronto al 55 7374 4800 o por WhatsApp.'
+};
+function sendChat(){
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim();if(!msg)return;
+  addChatMsg(msg,'user');input.value='';
+  document.getElementById('quickReplies').style.display='none';
+  setTimeout(()=>{
+    const key=Object.keys(BOT).find(k=>msg.toLowerCase().includes(k))||'default';
+    addChatMsg(BOT[key],'bot');
+  },600);
+}
+function quickReply(txt){document.getElementById('chatInput').value=txt;sendChat();}
+function addChatMsg(text,who){
+  const box=document.getElementById('chatMessages');
+  const div=document.createElement('div');div.className=`chat-msg ${who}`;
+  div.innerHTML=`<div class="chat-bubble">${text}</div>`;
+  box.appendChild(div);box.scrollTop=box.scrollHeight;
+}
+function toggleFav(btn){
+  btn.textContent=btn.textContent==='♡'?'♥':'♡';
+  btn.style.color=btn.textContent==='♥'?'#e91e63':'';
+  if(btn.textContent==='♥')showToast('❤️ Guardado en favoritos');
+}
+
+// ════════════════════════════════════════════════
+//  API helper
+// ════════════════════════════════════════════════
+async function apiFetch(path,opts={}){
+  const url=(localStorage.getItem('apiUrl')||API_URL)+path;
+  const headers={'Content-Type':'application/json'};
+  if(authToken)headers['Authorization']='Bearer '+authToken;
+  const res=await fetch(url,{
+    method:opts.method||'GET',
+    headers,
+    body:opts.body?JSON.stringify(opts.body):undefined,
+  });
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok)throw new Error(data.detail||'Error en la API ('+res.status+')');
+  return data;
+}
+
+// ════════════════════════════════════════════════
+//  TOAST
+// ════════════════════════════════════════════════
+let toastT;
+function showToast(msg,bg='#1A1A1A'){
+  const el=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  el.style.background=bg;el.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+// ════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════
+updateCartCount();
+updateUserUI();
+renderProducts(DEMO_PRODUCTS);
+document.getElementById('apiUrlInput') && (document.getElementById('apiUrlInput').value=localStorage.getItem('apiUrl')||'');
+</script>
+</body>
+</html>
