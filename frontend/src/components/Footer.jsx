@@ -1,5 +1,4 @@
-const TELEFONO = "5215524177160"; // formato internacional para wa.me
-const TELEFONO_VISIBLE = "55 2417 7160";
+import { TELEFONO_WHATSAPP, TELEFONO_VISIBLE } from "../contacto";
 
 function IconoWhatsApp() {
   return (
@@ -35,9 +34,14 @@ export default function Footer() {
           <IconoInstagram />
           @kukis
         </a>
-        <a href={`https://wa.me/${TELEFONO}`} target="_blank" rel="noreferrer">
+        <a
+          href={`https://wa.me/${TELEFONO_WHATSAPP}`}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Escríbenos por WhatsApp al ${TELEFONO_VISIBLE}`}
+          title={`WhatsApp: ${TELEFONO_VISIBLE}`}
+        >
           <IconoWhatsApp />
-          {TELEFONO_VISIBLE}
         </a>
       </div>
     </footer>

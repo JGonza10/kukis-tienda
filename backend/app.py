@@ -21,9 +21,18 @@ UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 FRONTEND_DIST = os.path.abspath(os.path.join(BASE_DIR, "..", "frontend", "dist"))
 
 
+def _variable_obligatoria(nombre):
+    valor = os.environ.get(nombre)
+    if not valor:
+        raise RuntimeError(
+            f"Falta la variable de entorno {nombre}. Revisa backend/.env.example."
+        )
+    return valor
+
+
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "cambia-esto-en-produccion")
+    app.config["SECRET_KEY"] = _variable_obligatoria("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
         "DATABASE_URL", f"sqlite:///{os.path.join(BASE_DIR, 'kukis.db')}"
     ).replace("postgres://", "postgresql://", 1)
@@ -32,6 +41,10 @@ def create_app():
     app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024  # 8 MB por imagen
     app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=7)
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+    # Solo exigimos cookie de sesión sobre HTTPS cuando ya se sirve el build
+    # de React (es decir, en el despliegue real): en desarrollo local el
+    # backend corre en http:// y el navegador descartaría la cookie.
+    app.config["SESSION_COOKIE_SECURE"] = os.path.isdir(FRONTEND_DIST)
 
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
     db.init_app(app)
@@ -66,8 +79,11 @@ def create_app():
     with app.app_context():
         db.create_all()
         if not Usuario.query.first():
-            vendedora = Usuario(nombre_usuario="vendedora", nombre="Vendedora")
-            vendedora.set_password(os.environ.get("PASSWORD_INICIAL", "kukis2026"))
+            vendedora = Usuario(
+                nombre_usuario=os.environ.get("NOMBRE_USUARIO_INICIAL", "vendedora"),
+                nombre="Vendedora",
+            )
+            vendedora.set_password(_variable_obligatoria("PASSWORD_INICIAL"))
             db.session.add(vendedora)
             db.session.commit()
 

@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 from extensions import limiter
 from models import db, Usuario, Producto, Variante, Imagen, Apartado
 from auth import iniciar_sesion, cerrar_sesion, usuario_actual, login_requerido
-from horario import dentro_de_horario, estado_horario
+from horario import dentro_de_horario
 from apartados_utils import expirar_pendientes_vencidos
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/api/admin")
@@ -99,8 +99,8 @@ def cambiar_password():
 
     if not usuario.check_password(password_actual):
         return jsonify({"error": "La contraseña actual no es correcta."}), 401
-    if len(password_nueva) < 6:
-        return jsonify({"error": "La nueva contraseña debe tener al menos 6 caracteres."}), 400
+    if len(password_nueva) < 8:
+        return jsonify({"error": "La nueva contraseña debe tener al menos 8 caracteres."}), 400
 
     usuario.set_password(password_nueva)
     db.session.commit()

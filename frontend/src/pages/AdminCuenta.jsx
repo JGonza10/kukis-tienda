@@ -58,7 +58,7 @@ export default function AdminCuenta() {
             <input
               id="password-nueva"
               required
-              minLength={6}
+              minLength={8}
               type="password"
               value={passwordNueva}
               onChange={(e) => setPasswordNueva(e.target.value)}
@@ -69,7 +69,7 @@ export default function AdminCuenta() {
             <input
               id="password-confirmar"
               required
-              minLength={6}
+              minLength={8}
               type="password"
               value={passwordConfirmar}
               onChange={(e) => setPasswordConfirmar(e.target.value)}

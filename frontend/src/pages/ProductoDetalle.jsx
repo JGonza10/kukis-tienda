@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { api } from "../api";
+import { TELEFONO_WHATSAPP } from "../contacto";
 
 export default function ProductoDetalle() {
   const { id } = useParams();
@@ -65,7 +66,16 @@ export default function ProductoDetalle() {
           </p>
           <p style={{ fontSize: 13, color: "#6B6259" }}>
             Recógela y págala el domingo {confirmacion.fecha_entrega} en el tianguis. Cualquier
-            duda, escríbenos por WhatsApp al 55 2417 7160.
+            duda,{" "}
+            <a
+              href={`https://wa.me/${TELEFONO_WHATSAPP}`}
+              target="_blank"
+              rel="noreferrer"
+              style={{ textDecoration: "underline" }}
+            >
+              escríbenos por WhatsApp
+            </a>
+            .
           </p>
           <Link to="/" className="boton boton-naranja" style={{ marginTop: 10, display: "inline-block" }}>
             Seguir viendo el catálogo

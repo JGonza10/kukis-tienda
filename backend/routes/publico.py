@@ -1,5 +1,6 @@
 """Rutas públicas: catálogo, ficha de producto y crear un apartado."""
 from flask import Blueprint, request, jsonify
+from extensions import limiter
 from models import db, Producto, Variante, Apartado
 from horario import dentro_de_horario, estado_horario
 from apartados_utils import expirar_pendientes_vencidos
@@ -31,6 +32,7 @@ def ver_producto(producto_id):
 
 
 @publico_bp.post("/apartados")
+@limiter.limit("10 per hour")
 def crear_apartado():
     if not dentro_de_horario():
         return (

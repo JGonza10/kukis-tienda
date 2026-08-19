@@ -36,8 +36,6 @@ body {
   color: var(--texto);
 }
 
-.fuente-editorial { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
-
 a { color: inherit; text-decoration: none; }
 
 .contenedor {
