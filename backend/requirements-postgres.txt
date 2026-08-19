@@ -1,0 +1,6 @@
+# Instala esto además de requirements.txt SOLO cuando despliegues con
+# PostgreSQL (por ejemplo en Railway). En Windows local, psycopg2-binary
+# suele fallar al compilar porque necesita herramientas de compilación (C++
+# build tools) que casi nadie tiene instaladas; para desarrollar en tu
+# computadora con SQLite no lo necesitas para nada.
+psycopg2-binary==2.9.9

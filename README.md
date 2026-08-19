@@ -1,131 +1,113 @@
-# Kukis — Moda y Estilo
+# Kukis · tienda en línea con apartados
 
-Tienda en línea de ropa, calzado y accesorios (mujer, hombre, niños y bebé), compuesta por una API REST en FastAPI y un frontend estático de una sola página (SPA) que consume esa API.
+Tienda en línea para una vendedora de tianguis (solo vende los domingos en un horarios de 9 a 15:30).
+Las clientas ven el catálogo, apartan una prenda (talla y color) dejando su
+nombre y teléfono, y pagan/recogen en persona el domingo. La vendedora
+administra su inventario, sube fotos y gestiona los apartados desde un panel
+con su propio login. Todo el sistema (catálogo, apartados y panel) opera solo
+de 9:00 a 22:00, todos los días.
 
-## Estado actual
+Funciona en escritorio y en móvil (diseño responsive).
 
-**En desarrollo / prototipo funcional.** El backend expone un flujo de e-commerce completo (catálogo, carrito, pedidos, panel admin) y el frontend ya lo consume, pero hay señales claras de que el proyecto no está listo para producción real:
-
-- El `JWT_SECRET` ahora es **obligatorio**: la app falla al arrancar con un error claro si la variable de entorno no está configurada (ya no existe un valor por defecto inseguro).
-- El usuario administrador se inserta en `schema.sql` con un hash de contraseña de relleno (`$2b$12$REEMPLAZA_CON_HASH_BCRYPT_REAL`) que debe generarse y actualizarse manualmente.
-- No hay integración de pago real: el método de pago se guarda como dato, pero no existe cobro efectivo con pasarela (PayPal, Stripe, etc.) — está listado como mejora futura en `DEPLOY.md`.
-- No hay subida de imágenes implementada en el backend (las URLs de imágenes se guardan en tabla, pero la integración con Cloudinary es un paso pendiente descrito en `DEPLOY.md`).
-- Ya existe un `.env.example` en la raíz con los nombres de variables de entorno reales (sin valores). No se encontraron pruebas automatizadas, `Procfile` ni configuración de CI en la raíz del proyecto (sí se mencionan en `DEPLOY.md` como parte de una estructura de carpetas `backend/`/`frontend/`/`db/` que hoy no existe; en este repositorio todos los archivos están en la raíz).
-- El frontend (`index.html`) actualmente solo consume `/auth/login`, `/auth/registro` y `/admin/dashboard` de la API; el catálogo y el carrito de la tienda usan datos de demostración (`DEMO_PRODUCTS`) y `localStorage` en vez de los endpoints `/productos`, `/categorias`, `/tallas`, `/carrito` y `/pedidos`, que existen en `main.py` pero aún no están conectados desde el frontend.
-
-## Características principales
-
-Basado en los endpoints reales de `main.py`:
-
-- **Autenticación**: registro (`POST /auth/registro`) y login (`POST /auth/login`) con contraseñas hasheadas (bcrypt) y tokens JWT; validación de contraseña fuerte (mínimo 8 caracteres, mayúscula y número).
-- **Catálogo de productos**: listado con filtros por categoría, género, búsqueda de texto, rango de precio y ofertas, con paginación (`GET /productos`); detalle de producto con variantes (talla/color/stock), imágenes y reseñas aprobadas (`GET /productos/{id}`).
-- **Categorías y tallas**: catálogo de categorías (`GET /categorias`) y de tallas por tipo — ropa adulto/niño, calzado adulto/niño/bebé, talla única (`GET /tallas`).
-- **Carrito de compras**: ver (`GET /carrito`), agregar con validación de stock (`POST /carrito`) y eliminar (`DELETE /carrito/{variante_id}`), asociado al usuario autenticado.
-- **Pedidos**: creación de pedido a partir del carrito con verificación de stock, cálculo de IVA (16%) y número de pedido autogenerado (`POST /pedidos`); historial de pedidos del usuario (`GET /pedidos`).
-- **Panel de administración** (roles `admin`/`editor`): dashboard con ventas del mes, pedidos pendientes y alertas de stock bajo (`GET /admin/dashboard`), listado y filtro de pedidos (`GET /admin/pedidos`), actualización de estado de pedido (`PATCH /admin/pedidos/{numero}`) y reporte de stock bajo (`GET /admin/stock-bajo`).
-- **Frontend SPA** (`index.html`): catálogo navegable, modal de producto con selección de talla/color, carrito con `localStorage`, login/registro, flujo de checkout y una sección de administración integrada en la misma página.
-- **Auditoría**: registro de acciones (login, registro, etc.) en tabla `log_auditoria`.
-- **Reseñas y favoritos**: modelo de datos ya definido en `schema.sql` (tablas `resenas`, `favoritos`), aunque no todos tienen endpoint expuesto todavía en `main.py`.
-- **Cupones de descuento**: tabla y datos de ejemplo en `schema.sql` (`cupones`), referenciados en el modelo de creación de pedido, pero sin lógica de aplicación de descuento implementada en el endpoint actual.
-
-## Stack tecnológico
-
-- **Backend**: Python + [FastAPI](https://fastapi.tiangolo.com/) 0.111, servido con Uvicorn.
-- **Base de datos**: PostgreSQL, alojada en [Supabase](https://supabase.com) (confirmado en `main.py`, `schema.sql` y `DEPLOY.md`). Acceso mediante `asyncpg` con pool de conexiones asíncrono.
-- **Autenticación**: JWT (`PyJWT`) + hashing de contraseñas con `bcrypt`.
-- **Validación de datos**: Pydantic v2 (`pydantic[email]`).
-- **Frontend**: HTML/CSS/JavaScript puro en un único archivo (`index.html`), sin framework ni build step; consume la API vía `fetch`.
-- **Despliegue previsto** (ver `DEPLOY.md`): API en Render.com, frontend en Netlify, base de datos en Supabase e imágenes en Cloudinary — todo dentro de planes gratuitos.
-
-Dependencias exactas (`requirements.txt`):
-
-```
-fastapi==0.111.0
-uvicorn[standard]==0.29.0
-asyncpg==0.29.0
-bcrypt==4.1.3
-pyjwt==2.8.0
-pydantic[email]==2.7.1
-```
-
-## Estructura del proyecto
+## Estructura
 
 ```
 07 Tienda en Linea Kukis/
-├── main.py         # API FastAPI completa (auth, productos, carrito, pedidos, admin)
-├── requirements.txt# Dependencias Python del backend
-├── schema.sql       # Esquema completo de PostgreSQL (tablas, triggers, vistas, datos semilla)
-├── index.html       # Frontend SPA (tienda + carrito + checkout + panel admin)
-└── DEPLOY.md         # Guía paso a paso de despliegue (Supabase + Render + Netlify + Cloudinary)
+├── backend/     Flask + SQLAlchemy (API + panel de administración)
+└── frontend/    React + Vite (catálogo público y panel de la vendedora)
 ```
 
-> Nota: `DEPLOY.md` describe una organización en carpetas `backend/`, `frontend/` y `db/`; en este repositorio, tal como está hoy, todos los archivos viven en la raíz.
+## Correr en tu computadora
 
-## Cómo instalar y ejecutar en local
+### 1. Backend
 
-### Requisitos previos
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate   # en Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env
+python app.py
+```
 
-- Python 3.10+
-- Una base de datos PostgreSQL accesible (puede ser un proyecto gratuito de Supabase, o PostgreSQL local)
+Esto crea la base de datos (SQLite por default), un usuario inicial
+`vendedora` / `kukis2026` (cámbialo apenas entres), y deja la API corriendo
+en `http://localhost:5000`.
 
-### Pasos
+Para cargar 3 prendas de ejemplo y probar el catálogo:
 
-1. Instalar dependencias:
+```bash
+python seed_demo.py
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 2. Frontend
 
-2. Crear el esquema de base de datos ejecutando `schema.sql` contra tu instancia PostgreSQL (por ejemplo, desde el SQL Editor de Supabase o con `psql`):
+En otra terminal:
 
-   ```bash
-   psql "postgresql://usuario:password@host:5432/basedatos" -f schema.sql
-   ```
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-3. Definir las variables de entorno necesarias (ver detalle en `main.py`):
+Abre `http://localhost:5180`. El catálogo es público; el panel de la
+vendedora está en `/admin`.
 
-   | Variable | Descripción | Valor por defecto |
-   |---|---|---|
-   | `DATABASE_URL` | Cadena de conexión a PostgreSQL | `postgresql://user:pass@localhost/kukis` (solo referencia, no usar en producción) |
-   | `JWT_SECRET` | Secreto para firmar los tokens JWT | inseguro por defecto — **debe cambiarse** |
-   | `JWT_EXPIRE_HOURS` | Horas de vigencia del token | `24` |
-   | `CORS_ORIGINS` | Orígenes permitidos por CORS, separados por coma | `http://localhost,https://kukis-moda.netlify.app` |
+## Cómo funciona el horario
 
-   Ejemplo en PowerShell:
+El sistema (apartar una prenda y el panel de la vendedora) solo funciona de
+9:00 a 22:00, todos los días, hora de Ciudad de México. Fuera de ese horario
+el catálogo se puede seguir viendo, pero no se pueden hacer ni confirmar
+apartados. Esto se controla en `backend/horario.py`.
 
-   ```powershell
-   $env:DATABASE_URL = "postgresql://usuario:password@host:5432/basedatos"
-   $env:JWT_SECRET = "genera-un-valor-con-openssl-rand-hex-32"
-   $env:JWT_EXPIRE_HOURS = "24"
-   $env:CORS_ORIGINS = "http://localhost"
-   ```
+## Aviso por Telegram de apartados nuevos
 
-4. Levantar la API:
+Es opcional. Si `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID` están vacíos en el
+`.env`, el sistema simplemente no manda ningún aviso (y los apartados se
+siguen creando normal). Para activarlo:
 
-   ```bash
-   uvicorn main:app --reload --port 8000
-   ```
+1. En Telegram, habla con **@BotFather**, manda `/newbot` y sigue los pasos.
+   Al final te da un token — cópialo en `TELEGRAM_BOT_TOKEN`.
+2. Mándale cualquier mensaje a tu bot recién creado (para que Telegram sepa
+   que puede escribirte).
+3. Entra en el navegador a
+   `https://api.telegram.org/bot<TU_TOKEN>/getUpdates` y busca el número en
+   `"chat":{"id": ...}` — ese es tu `TELEGRAM_CHAT_ID`. También puedes
+   obtenerlo hablando con **@userinfobot**.
 
-5. Verificar que responde:
+## Contacto configurado
 
-   - `http://localhost:8000/health`
-   - Documentación interactiva: `http://localhost:8000/docs`
+- WhatsApp: 55 2417 7160 (enlace `wa.me` en el pie de página y junto a cada
+  apartado en el panel, para escribirle directo a la clienta)
+- Instagram: @kukis
 
-6. Abrir el frontend: `index.html` puede abrirse directamente en el navegador o servirse con cualquier servidor estático. Por defecto apunta a `https://kukis-api.onrender.com`; para usar la API local hay que cambiar la URL desde el propio panel de la tienda (menú Admin → Configuración) o editar la constante `API_URL` en `index.html`.
+## Antes de publicarla en internet
 
-7. (Opcional) Generar el hash de la contraseña del usuario administrador y actualizarlo en la base de datos, ya que `schema.sql` inserta un hash de relleno:
+1. Cambia la contraseña del usuario `vendedora` (créala de nuevo con
+   `PASSWORD_INICIAL` en el `.env`, o agrega un endpoint de cambio de
+   contraseña más adelante).
+2. Cambia `SECRET_KEY` en el `.env` por algo largo y aleatorio.
+3. Las fotos que suba la vendedora se guardan en `backend/uploads/` — en
+   Railway eso se borra en cada deploy, así que para producción conviene
+   moverlas a un almacenamiento externo (por ejemplo Cloudinary o un bucket
+   S3). Mientras tanto funciona para pruebas.
+4. Para desplegar en Railway con base de datos PostgreSQL, usa la skill
+   `web-deploy-db` — este backend ya lee `DATABASE_URL` y sirve el build de
+   React (`frontend/dist`) desde el mismo servicio, así que basta con un solo
+   servicio de Railway. Antes de desplegar, instala también
+   `pip install -r requirements-postgres.txt` (ese paquete no está en el
+   `requirements.txt` normal porque en Windows suele fallar al compilar y no
+   se necesita para desarrollar en local con SQLite).
 
-   ```bash
-   python -c "import bcrypt; print(bcrypt.hashpw(b'TuPassword', bcrypt.gensalt(12)).decode())"
-   ```
+## Problemas comunes
 
-## Documentación relacionada
-
-Para el despliegue completo a producción (Supabase + Render + Netlify + Cloudinary, variables de entorno de cada servicio, comandos de prueba con `curl` y el roadmap de mejoras futuras) consulta **[`DEPLOY.md`](./DEPLOY.md)**, que incluye la guía paso a paso completa.
-
-## Notas relevantes
-
-- El backend no incluye por sí mismo endpoints de subida de imágenes ni integración con Cloudinary; esa integración es un paso pendiente documentado en `DEPLOY.md`.
-- No se detectaron archivos de pruebas automatizadas (`tests/`, `pytest`, etc.) en el proyecto.
-- Nunca subas valores reales de `DATABASE_URL`, `JWT_SECRET` ni contraseñas al repositorio; usa siempre variables de entorno.
-- Autor: Juan González Mendoza (según cabeceras de `main.py` y `schema.sql`).
+- **"Ocurrió un error inesperado" al iniciar sesión en el panel:** casi
+  siempre significa que el navegador no pudo llegar al backend en JSON.
+  Revisa que tengas las dos terminales corriendo al mismo tiempo (`python
+  app.py` en una y `npm run dev` en otra) y entra a `http://localhost:5000/api/health`
+  directo en el navegador — debe mostrar `{"ok": true, ...}`. Si no carga,
+  el backend no está corriendo o truena al iniciar.
+- **`pip install` truena en `psycopg2-binary`:** ese paquete se movió a
+  `requirements-postgres.txt` porque solo se necesita para desplegar con
+  PostgreSQL, no para desarrollar en local. Con el `requirements.txt` actual
+  ya no debería intentar instalarlo.

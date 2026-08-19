@@ -1,29 +1,11 @@
-# Entornos virtuales
-venv/
-.venv/
-env/
-ENV/
-
-# Bytecode / cache de Python
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Variables de entorno / secretos
-.env
-.env.*
-!.env.example
-
-# Distribución / empaquetado
-build/
-dist/
-*.egg-info/
-
-# Logs
-*.log
-
-# Editores / SO
-.vscode/
-.idea/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.db
+backend/instance/
+backend/uploads/
+backend/.env
+backend/venv/
+frontend/node_modules/
+frontend/dist/
+logs/
 .DS_Store
-Thumbs.db
