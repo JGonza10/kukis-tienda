@@ -12,7 +12,7 @@ export default function ProductCard({ producto }) {
         {imagenPrincipal ? (
           <img src={imagenPrincipal.url} alt={producto.nombre} />
         ) : (
-          <span style={{ color: "#B85A16", fontSize: 12 }}>Sin foto</span>
+          <span style={{ color: "var(--acento-oscuro)", fontSize: 12 }}>Sin foto</span>
         )}
       </div>
       <div className="cuerpo">

@@ -240,7 +240,7 @@ function TarjetaProductoAdmin({ producto, onCambio }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap" }}>
         <div>
           <strong style={{ fontSize: 14 }}>{producto.nombre}</strong>
-          <div style={{ fontSize: 13, color: "#B23368", fontWeight: 500 }}>${producto.precio.toLocaleString("es-MX")}</div>
+          <div style={{ fontSize: 13, color: "var(--acento-oscuro)", fontWeight: 500 }}>${producto.precio.toLocaleString("es-MX")}</div>
           <div style={{ fontSize: 12, color: "#6B6259" }}>{producto.categoria || "Sin categoría"}</div>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -276,7 +276,7 @@ function TarjetaProductoAdmin({ producto, onCambio }) {
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "6px 0" }}>
               {producto.imagenes.map((img) => (
                 <div key={img.id} style={{ position: "relative" }}>
-                  <img src={img.url} alt="" style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 8, border: "0.5px solid #F0E8E2" }} />
+                  <img src={img.url} alt="" style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 8, border: "0.5px solid var(--borde)" }} />
                   <button
                     onClick={() => eliminarImagen(img.id)}
                     style={{ position: "absolute", top: -6, right: -6, width: 18, height: 18, borderRadius: "50%", border: "none", background: "#A32D2D", color: "#fff", fontSize: 11, cursor: "pointer" }}

@@ -82,7 +82,7 @@ export default function ProductoDetalle() {
           {imagenes[imagenActiva] ? (
             <img src={imagenes[imagenActiva].url} alt={producto.nombre} />
           ) : (
-            <span style={{ color: "#B85A16", fontSize: 13 }}>Sin foto todavía</span>
+            <span style={{ color: "var(--acento-oscuro)", fontSize: 13 }}>Sin foto todavía</span>
           )}
         </div>
         {imagenes.length > 1 && (
@@ -93,7 +93,7 @@ export default function ProductoDetalle() {
                 src={img.url}
                 alt=""
                 onClick={() => setImagenActiva(i)}
-                style={{ borderColor: i === imagenActiva ? "#1B5FCC" : undefined }}
+                style={{ borderColor: i === imagenActiva ? "var(--negro)" : undefined }}
               />
             ))}
           </div>
@@ -102,7 +102,7 @@ export default function ProductoDetalle() {
 
       <div>
         <h1 style={{ fontSize: 20, fontWeight: 500, margin: "0 0 4px" }}>{producto.nombre}</h1>
-        <p style={{ fontSize: 18, fontWeight: 500, color: "#B23368", margin: "0 0 10px" }}>
+        <p style={{ fontSize: 18, fontWeight: 500, color: "var(--acento-oscuro)", margin: "0 0 10px" }}>
           ${producto.precio.toLocaleString("es-MX")}
         </p>
         <p style={{ fontSize: 14, color: "#6B6259" }}>{producto.descripcion}</p>

@@ -32,7 +32,7 @@ export default function AdminApartados() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, flexWrap: "wrap", gap: 8 }}>
         <h1 style={{ fontSize: 18, fontWeight: 500, margin: 0 }}>Apartados</h1>
-        <select value={filtro} onChange={(e) => setFiltro(e.target.value)} style={{ padding: 8, borderRadius: 8, border: "0.5px solid #F0E8E2" }}>
+        <select value={filtro} onChange={(e) => setFiltro(e.target.value)} style={{ padding: 8, borderRadius: 8, border: "0.5px solid var(--borde)" }}>
           <option value="">Todos los estados</option>
           {Object.entries(ETIQUETAS).map(([valor, texto]) => (
             <option key={valor} value={valor}>{texto}</option>
@@ -68,7 +68,7 @@ export default function AdminApartados() {
                     <select
                       value={a.estado}
                       onChange={(e) => cambiarEstado(a.id, e.target.value)}
-                      style={{ padding: 6, borderRadius: 8, border: "0.5px solid #F0E8E2", fontSize: 12 }}
+                      style={{ padding: 6, borderRadius: 8, border: "0.5px solid var(--borde)", fontSize: 12 }}
                     >
                       {Object.entries(ETIQUETAS).map(([valor, texto]) => (
                         <option key={valor} value={valor}>{texto}</option>
