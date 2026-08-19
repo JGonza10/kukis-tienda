@@ -1,4 +1,5 @@
 """Rutas del panel de la vendedora: login, inventario y apartados."""
+import io
 import os
 import secrets
 import uuid
@@ -11,6 +12,7 @@ from models import db, Usuario, Producto, Variante, Imagen, Apartado
 from auth import iniciar_sesion, cerrar_sesion, usuario_actual, login_requerido
 from horario import dentro_de_horario
 from apartados_utils import expirar_pendientes_vencidos
+import storage
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/api/admin")
 
@@ -30,8 +32,9 @@ def _extension_valida(nombre_archivo):
     return "." in nombre_archivo and nombre_archivo.rsplit(".", 1)[1].lower() in EXTENSIONES_VALIDAS
 
 
-def _guardar_imagen_comprimida(archivo, ruta_absoluta):
-    """Redimensiona (si hace falta) y comprime la imagen antes de guardarla en disco."""
+def _comprimir_imagen(archivo):
+    """Redimensiona (si hace falta) y comprime la imagen subida.
+    Regresa (bytes, content_type)."""
     try:
         imagen = Image.open(archivo.stream)
         imagen.load()
@@ -39,8 +42,7 @@ def _guardar_imagen_comprimida(archivo, ruta_absoluta):
         # No se pudo procesar con Pillow (archivo corrupto o formato raro):
         # se guarda tal cual llegó en vez de rechazar la subida.
         archivo.stream.seek(0)
-        archivo.save(ruta_absoluta)
-        return
+        return archivo.stream.read(), archivo.mimetype or "application/octet-stream"
 
     formato = imagen.format or "JPEG"
     if imagen.width > LADO_MAXIMO_IMAGEN or imagen.height > LADO_MAXIMO_IMAGEN:
@@ -52,7 +54,19 @@ def _guardar_imagen_comprimida(archivo, ruta_absoluta):
             imagen = imagen.convert("RGB")
         parametros_guardado["quality"] = 82
 
-    imagen.save(ruta_absoluta, format=formato, **parametros_guardado)
+    buffer = io.BytesIO()
+    imagen.save(buffer, format=formato, **parametros_guardado)
+    content_type = Image.MIME.get(formato, "application/octet-stream")
+    return buffer.getvalue(), content_type
+
+
+def _guardar_imagen(nombre_unico, datos, content_type):
+    if storage.habilitado():
+        storage.guardar(nombre_unico, datos, content_type)
+    else:
+        ruta_absoluta = os.path.join(current_app.config["UPLOAD_FOLDER"], nombre_unico)
+        with open(ruta_absoluta, "wb") as f:
+            f.write(datos)
 
 
 @admin_bp.before_request
@@ -290,8 +304,8 @@ def subir_imagen(producto_id):
 
     nombre_seguro = secure_filename(archivo.filename)
     nombre_unico = f"{uuid.uuid4().hex}_{nombre_seguro}"
-    ruta_absoluta = os.path.join(current_app.config["UPLOAD_FOLDER"], nombre_unico)
-    _guardar_imagen_comprimida(archivo, ruta_absoluta)
+    datos, content_type = _comprimir_imagen(archivo)
+    _guardar_imagen(nombre_unico, datos, content_type)
 
     imagen = Imagen(
         producto_id=producto.id,
@@ -307,16 +321,21 @@ def subir_imagen(producto_id):
 @login_requerido
 def eliminar_imagen(imagen_id):
     imagen = Imagen.query.get_or_404(imagen_id)
-    ruta_absoluta = os.path.join(current_app.config["UPLOAD_FOLDER"], os.path.basename(imagen.url))
+    nombre_archivo = os.path.basename(imagen.url)
     db.session.delete(imagen)
     db.session.commit()
-    try:
-        if os.path.exists(ruta_absoluta):
-            os.remove(ruta_absoluta)
-    except OSError:
-        # El registro ya se borró de la base de datos; si el archivo físico
-        # no se pudo eliminar (permisos del disco), no debe tumbar la petición.
-        pass
+    if storage.habilitado():
+        storage.eliminar(nombre_archivo)
+    else:
+        ruta_absoluta = os.path.join(current_app.config["UPLOAD_FOLDER"], nombre_archivo)
+        try:
+            if os.path.exists(ruta_absoluta):
+                os.remove(ruta_absoluta)
+        except OSError:
+            # El registro ya se borró de la base de datos; si el archivo
+            # físico no se pudo eliminar (permisos del disco), no debe
+            # tumbar la petición.
+            pass
     return jsonify({"ok": True})
 
 

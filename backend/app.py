@@ -7,12 +7,13 @@ hace proxy a /api y /uploads (ver frontend/vite.config.js).
 """
 import os
 from datetime import timedelta
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, Response, abort, jsonify, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
 
 from models import db, Usuario
 from extensions import limiter
+import storage
 
 load_dotenv()
 
@@ -83,6 +84,16 @@ def create_app():
 
     @app.get("/uploads/<path:nombre_archivo>")
     def uploads(nombre_archivo):
+        if storage.habilitado():
+            resultado = storage.leer(nombre_archivo)
+            if resultado is None:
+                abort(404)
+            datos, content_type = resultado
+            return Response(
+                datos,
+                mimetype=content_type,
+                headers={"Cache-Control": "public, max-age=31536000, immutable"},
+            )
         return send_from_directory(UPLOAD_FOLDER, nombre_archivo)
 
     if os.path.isdir(FRONTEND_DIST):
