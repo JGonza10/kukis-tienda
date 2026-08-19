@@ -11,7 +11,7 @@ export default function Header() {
         <Link to="/">Catálogo</Link>
         <a href="#contacto">Contacto</a>
       </nav>
-      <Link to="/admin" className="enlace-cuenta">Iniciar sesión</Link>
+      <Link to="/admin" className="enlace-cuenta">Panel de la vendedora</Link>
     </header>
   );
 }
