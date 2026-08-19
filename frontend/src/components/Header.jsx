@@ -11,7 +11,6 @@ export default function Header() {
         <span className="logo-marca">K</span>
         <span>Kukis</span>
       </Link>
-      <Link to="/admin" className="enlace-cuenta">Panel de la vendedora</Link>
     </header>
   );
 }

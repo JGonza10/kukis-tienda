@@ -21,6 +21,24 @@ UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 FRONTEND_DIST = os.path.abspath(os.path.join(BASE_DIR, "..", "frontend", "dist"))
 
 
+def _migrar_columnas_faltantes():
+    """Agrega columnas nuevas a tablas que ya existían antes de que se
+    agregaran esas columnas al modelo. db.create_all() solo crea tablas que
+    faltan por completo, no altera las que ya existen — como este proyecto
+    no usa Alembic, esto cubre ese hueco de forma idempotente."""
+    inspector = db.inspect(db.engine)
+    if "usuarios" not in inspector.get_table_names():
+        return
+    columnas = {c["name"] for c in inspector.get_columns("usuarios")}
+    if "debe_cambiar_password" not in columnas:
+        with db.engine.begin() as conexion:
+            conexion.execute(
+                db.text(
+                    "ALTER TABLE usuarios ADD COLUMN debe_cambiar_password BOOLEAN NOT NULL DEFAULT false"
+                )
+            )
+
+
 def _variable_obligatoria(nombre):
     valor = os.environ.get(nombre)
     if not valor:
@@ -78,10 +96,12 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        _migrar_columnas_faltantes()
         if not Usuario.query.first():
             vendedora = Usuario(
                 nombre_usuario=os.environ.get("NOMBRE_USUARIO_INICIAL", "vendedora"),
                 nombre="Vendedora",
+                debe_cambiar_password=True,
             )
             vendedora.set_password(_variable_obligatoria("PASSWORD_INICIAL"))
             db.session.add(vendedora)

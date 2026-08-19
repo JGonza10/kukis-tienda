@@ -28,6 +28,11 @@ export const api = {
   cambiarPassword: (payload) =>
     solicitud("/admin/password", { method: "PUT", body: JSON.stringify(payload) }),
 
+  adminUsuarios: () => solicitud("/admin/usuarios"),
+  crearUsuario: (payload) =>
+    solicitud("/admin/usuarios", { method: "POST", body: JSON.stringify(payload) }),
+  eliminarUsuario: (id) => solicitud(`/admin/usuarios/${id}`, { method: "DELETE" }),
+
   adminProductos: () => solicitud("/admin/productos"),
   crearProducto: (payload) =>
     solicitud("/admin/productos", { method: "POST", body: JSON.stringify(payload) }),

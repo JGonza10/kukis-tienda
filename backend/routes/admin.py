@@ -1,8 +1,10 @@
 """Rutas del panel de la vendedora: login, inventario y apartados."""
 import os
+import secrets
 import uuid
 from flask import Blueprint, request, jsonify, current_app
 from PIL import Image
+from sqlalchemy.exc import IntegrityError
 from werkzeug.utils import secure_filename
 from extensions import limiter
 from models import db, Usuario, Producto, Variante, Imagen, Apartado
@@ -14,6 +16,14 @@ admin_bp = Blueprint("admin", __name__, url_prefix="/api/admin")
 
 EXTENSIONES_VALIDAS = {"png", "jpg", "jpeg", "webp"}
 LADO_MAXIMO_IMAGEN = 1600
+ALFABETO_PASSWORD_TEMPORAL = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789"
+# Rutas permitidas aunque la cuenta tenga pendiente cambiar su contraseña:
+# tiene que poder cambiarla, ver quién es, o salir, pero nada más.
+RUTAS_PERMITIDAS_CON_PASSWORD_PENDIENTE = {"/api/admin/password", "/api/admin/me", "/api/admin/logout"}
+
+
+def _generar_password_temporal(largo=14):
+    return "".join(secrets.choice(ALFABETO_PASSWORD_TEMPORAL) for _ in range(largo))
 
 
 def _extension_valida(nombre_archivo):
@@ -60,6 +70,23 @@ def _verificar_horario():
     expirar_pendientes_vencidos()
 
 
+@admin_bp.before_request
+def _verificar_password_pendiente():
+    if request.method == "OPTIONS" or request.path in RUTAS_PERMITIDAS_CON_PASSWORD_PENDIENTE:
+        return
+    usuario = usuario_actual()
+    if usuario and usuario.debe_cambiar_password:
+        return (
+            jsonify(
+                {
+                    "error": "Debes cambiar tu contraseña antes de continuar.",
+                    "debe_cambiar_password": True,
+                }
+            ),
+            403,
+        )
+
+
 @admin_bp.post("/login")
 @limiter.limit("5 per minute")
 def login():
@@ -103,6 +130,52 @@ def cambiar_password():
         return jsonify({"error": "La nueva contraseña debe tener al menos 8 caracteres."}), 400
 
     usuario.set_password(password_nueva)
+    usuario.debe_cambiar_password = False
+    db.session.commit()
+    return jsonify({"ok": True})
+
+
+# ---------- Usuarios ----------
+
+@admin_bp.get("/usuarios")
+@login_requerido
+def listar_usuarios():
+    usuarios = Usuario.query.order_by(Usuario.creado_en.asc()).all()
+    return jsonify([u.to_dict() for u in usuarios])
+
+
+@admin_bp.post("/usuarios")
+@login_requerido
+def crear_usuario():
+    data = request.get_json(silent=True) or {}
+    nombre_usuario = (data.get("nombre_usuario") or "").strip()
+    nombre = (data.get("nombre") or "").strip() or nombre_usuario
+
+    if len(nombre_usuario) < 3:
+        return jsonify({"error": "El usuario debe tener al menos 3 caracteres."}), 400
+
+    password_temporal = _generar_password_temporal()
+    nuevo = Usuario(nombre_usuario=nombre_usuario, nombre=nombre, debe_cambiar_password=True)
+    nuevo.set_password(password_temporal)
+    db.session.add(nuevo)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": f'Ya existe un usuario "{nombre_usuario}".'}), 409
+
+    data = nuevo.to_dict()
+    data["password_temporal"] = password_temporal
+    return jsonify(data), 201
+
+
+@admin_bp.delete("/usuarios/<int:usuario_id>")
+@login_requerido
+def eliminar_usuario(usuario_id):
+    if Usuario.query.count() <= 1:
+        return jsonify({"error": "No puedes eliminar el único usuario que queda."}), 400
+    usuario = Usuario.query.get_or_404(usuario_id)
+    db.session.delete(usuario)
     db.session.commit()
     return jsonify({"ok": True})
 

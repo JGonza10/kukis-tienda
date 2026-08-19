@@ -11,6 +11,7 @@ import AdminLayout from "./pages/AdminLayout";
 import AdminInventario from "./pages/AdminInventario";
 import AdminApartados from "./pages/AdminApartados";
 import AdminCuenta from "./pages/AdminCuenta";
+import AdminUsuarios from "./pages/AdminUsuarios";
 
 function LayoutPublico() {
   return (
@@ -45,19 +46,28 @@ export default function App() {
       <Route
         path="/admin"
         element={
-          usuario ? <Navigate to="/admin/inventario" replace /> : <AdminLogin onLogin={setUsuario} />
+          usuario ? (
+            <Navigate to={usuario.debe_cambiar_password ? "/admin/cuenta" : "/admin/inventario"} replace />
+          ) : (
+            <AdminLogin onLogin={setUsuario} />
+          )
         }
       />
 
       <Route
         path="/admin"
         element={
-          usuario ? <AdminLayout usuario={usuario} onLogout={() => setUsuario(null)} /> : <Navigate to="/admin" replace />
+          usuario ? (
+            <AdminLayout usuario={usuario} onLogout={() => setUsuario(null)} onUsuarioActualizado={setUsuario} />
+          ) : (
+            <Navigate to="/admin" replace />
+          )
         }
       >
         <Route path="inventario" element={<AdminInventario />} />
         <Route path="apartados" element={<AdminApartados />} />
         <Route path="cuenta" element={<AdminCuenta />} />
+        <Route path="usuarios" element={<AdminUsuarios />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

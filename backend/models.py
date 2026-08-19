@@ -27,6 +27,7 @@ class Usuario(db.Model):
     nombre_usuario = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     nombre = db.Column(db.String(120), nullable=False, default="Vendedora")
+    debe_cambiar_password = db.Column(db.Boolean, nullable=False, default=False)
     creado_en = db.Column(db.DateTime, default=datetime.utcnow)
 
     def set_password(self, password):
@@ -36,7 +37,13 @@ class Usuario(db.Model):
         return check_password_hash(self.password_hash, password)
 
     def to_dict(self):
-        return {"id": self.id, "nombre_usuario": self.nombre_usuario, "nombre": self.nombre}
+        return {
+            "id": self.id,
+            "nombre_usuario": self.nombre_usuario,
+            "nombre": self.nombre,
+            "debe_cambiar_password": self.debe_cambiar_password,
+            "creado_en": self.creado_en.isoformat() if self.creado_en else None,
+        }
 
 
 class Producto(db.Model):
