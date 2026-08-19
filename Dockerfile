@@ -17,4 +17,4 @@ COPY backend/ ./
 COPY --from=frontend-build /app/frontend/dist /app/frontend/dist
 
 EXPOSE 8080
-CMD gunicorn app:app --bind 0.0.0.0:$PORT
+CMD gunicorn app:app --bind 0.0.0.0:$PORT --timeout 60
