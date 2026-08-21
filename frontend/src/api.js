@@ -33,6 +33,11 @@ export const api = {
     solicitud("/admin/usuarios", { method: "POST", body: JSON.stringify(payload) }),
   eliminarUsuario: (id) => solicitud(`/admin/usuarios/${id}`, { method: "DELETE" }),
 
+  adminCategorias: () => solicitud("/admin/categorias"),
+  crearCategoria: (payload) =>
+    solicitud("/admin/categorias", { method: "POST", body: JSON.stringify(payload) }),
+  eliminarCategoria: (id) => solicitud(`/admin/categorias/${id}`, { method: "DELETE" }),
+
   adminProductos: () => solicitud("/admin/productos"),
   crearProducto: (payload) =>
     solicitud("/admin/productos", { method: "POST", body: JSON.stringify(payload) }),

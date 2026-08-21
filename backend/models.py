@@ -46,6 +46,21 @@ class Usuario(db.Model):
         }
 
 
+class Categoria(db.Model):
+    """Catálogo de categorías administrable, para que el campo del producto
+    sea seleccionable en vez de texto libre (evita duplicados por dedazo o
+    mayúsculas, p. ej. "Blusas" vs "blusas")."""
+
+    __tablename__ = "categorias"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(80), unique=True, nullable=False)
+    creado_en = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {"id": self.id, "nombre": self.nombre}
+
+
 class Producto(db.Model):
     __tablename__ = "productos"
 

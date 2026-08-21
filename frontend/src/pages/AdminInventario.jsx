@@ -3,7 +3,18 @@ import { api } from "../api";
 
 const VARIANTE_VACIA = { talla: "", color: "", color_hex: "#FF6FA5", stock: 1 };
 
-function FormularioNuevoProducto({ onCreado }) {
+function SelectorCategoria({ value, onChange, categorias }) {
+  return (
+    <select value={value} onChange={onChange}>
+      <option value="">Sin categoría</option>
+      {categorias.map((c) => (
+        <option key={c.id} value={c.nombre}>{c.nombre}</option>
+      ))}
+    </select>
+  );
+}
+
+function FormularioNuevoProducto({ onCreado, categorias }) {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [categoria, setCategoria] = useState("");
@@ -62,7 +73,7 @@ function FormularioNuevoProducto({ onCreado }) {
       <div style={{ display: "flex", gap: 12 }}>
         <div className="campo" style={{ flex: 1 }}>
           <label>Categoría</label>
-          <input value={categoria} onChange={(e) => setCategoria(e.target.value)} />
+          <SelectorCategoria value={categoria} onChange={(e) => setCategoria(e.target.value)} categorias={categorias} />
         </div>
         <div className="campo" style={{ flex: 1 }}>
           <label>Precio</label>
@@ -108,7 +119,7 @@ function FormularioNuevoProducto({ onCreado }) {
   );
 }
 
-function FormularioEditarProducto({ producto, onGuardado, onCancelar }) {
+function FormularioEditarProducto({ producto, onGuardado, onCancelar, categorias }) {
   const [nombre, setNombre] = useState(producto.nombre);
   const [descripcion, setDescripcion] = useState(producto.descripcion);
   const [categoria, setCategoria] = useState(producto.categoria);
@@ -167,7 +178,7 @@ function FormularioEditarProducto({ producto, onGuardado, onCancelar }) {
       <div style={{ display: "flex", gap: 12 }}>
         <div className="campo" style={{ flex: 1 }}>
           <label>Categoría</label>
-          <input value={categoria} onChange={(e) => setCategoria(e.target.value)} />
+          <SelectorCategoria value={categoria} onChange={(e) => setCategoria(e.target.value)} categorias={categorias} />
         </div>
         <div className="campo" style={{ flex: 1 }}>
           <label>Precio</label>
@@ -215,7 +226,7 @@ function FormularioEditarProducto({ producto, onGuardado, onCancelar }) {
   );
 }
 
-function TarjetaProductoAdmin({ producto, onCambio }) {
+function TarjetaProductoAdmin({ producto, onCambio, categorias }) {
   const [subiendo, setSubiendo] = useState(false);
   const [editando, setEditando] = useState(false);
   const [error, setError] = useState("");
@@ -286,6 +297,7 @@ function TarjetaProductoAdmin({ producto, onCambio }) {
             onCambio();
           }}
           onCancelar={() => setEditando(false)}
+          categorias={categorias}
         />
       ) : (
         <>
@@ -338,6 +350,7 @@ function TarjetaProductoAdmin({ producto, onCambio }) {
 
 export default function AdminInventario() {
   const [productos, setProductos] = useState(null);
+  const [categorias, setCategorias] = useState([]);
   const [error, setError] = useState("");
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
@@ -345,7 +358,12 @@ export default function AdminInventario() {
     api.adminProductos().then(setProductos).catch((e) => setError(e.message));
   }
 
+  function cargarCategorias() {
+    api.adminCategorias().then(setCategorias).catch((e) => setError(e.message));
+  }
+
   useEffect(cargar, []);
+  useEffect(cargarCategorias, []);
 
   return (
     <div>
@@ -359,6 +377,7 @@ export default function AdminInventario() {
       {error && <p className="mensaje-error">{error}</p>}
       {mostrarFormulario && (
         <FormularioNuevoProducto
+          categorias={categorias}
           onCreado={() => {
             setMostrarFormulario(false);
             cargar();
@@ -369,7 +388,7 @@ export default function AdminInventario() {
       {!productos && <p className="centrado">Cargando…</p>}
       {productos && productos.length === 0 && <p className="centrado">Todavía no has agregado ninguna prenda.</p>}
       {productos && productos.map((p) => (
-        <TarjetaProductoAdmin key={p.id} producto={p} onCambio={cargar} />
+        <TarjetaProductoAdmin key={p.id} producto={p} onCambio={cargar} categorias={categorias} />
       ))}
     </div>
   );

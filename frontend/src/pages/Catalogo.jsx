@@ -37,7 +37,7 @@ export default function Catalogo() {
       <section className="hero">
         <span className="kicker">En el tianguis · cada domingo</span>
         <h1>Moda para cada domingo</h1>
-        <p>Aparta tu prenda favorita y recógela en el tianguis</p>
+        <p>Aparta tu prenda favorita y recógela en el tianguis del mercado de Bola, junto a la primaria</p>
       </section>
 
       <div className="contenedor">

@@ -11,7 +11,7 @@ from flask import Flask, Response, abort, jsonify, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from models import db, Usuario
+from models import db, Usuario, Categoria, Producto
 from extensions import limiter
 import storage
 
@@ -38,6 +38,23 @@ def _migrar_columnas_faltantes():
                     "ALTER TABLE usuarios ADD COLUMN debe_cambiar_password BOOLEAN NOT NULL DEFAULT false"
                 )
             )
+
+
+def _sembrar_categorias_existentes():
+    """La tabla categorias es nueva; para que la vendedora no pierda las
+    categorías que ya había escrito a mano en sus prendas, esta función las
+    da de alta una sola vez (es idempotente: si ya existen, no hace nada)."""
+    nombres_en_uso = {
+        (c or "").strip()
+        for (c,) in db.session.query(Producto.categoria).distinct()
+        if (c or "").strip()
+    }
+    nombres_existentes = {c.nombre.lower() for c in Categoria.query.all()}
+    for nombre in sorted(nombres_en_uso):
+        if nombre.lower() not in nombres_existentes:
+            db.session.add(Categoria(nombre=nombre))
+            nombres_existentes.add(nombre.lower())
+    db.session.commit()
 
 
 def _variable_obligatoria(nombre):
@@ -108,6 +125,7 @@ def create_app():
     with app.app_context():
         db.create_all()
         _migrar_columnas_faltantes()
+        _sembrar_categorias_existentes()
         if not Usuario.query.first():
             vendedora = Usuario(
                 nombre_usuario=os.environ.get("NOMBRE_USUARIO_INICIAL", "vendedora"),

@@ -8,7 +8,7 @@ from PIL import Image
 from sqlalchemy.exc import IntegrityError
 from werkzeug.utils import secure_filename
 from extensions import limiter
-from models import db, Usuario, Producto, Variante, Imagen, Apartado
+from models import db, Usuario, Producto, Variante, Imagen, Apartado, Categoria
 from auth import iniciar_sesion, cerrar_sesion, usuario_actual, login_requerido
 from horario import dentro_de_horario
 from apartados_utils import expirar_pendientes_vencidos
@@ -190,6 +190,48 @@ def eliminar_usuario(usuario_id):
         return jsonify({"error": "No puedes eliminar el único usuario que queda."}), 400
     usuario = Usuario.query.get_or_404(usuario_id)
     db.session.delete(usuario)
+    db.session.commit()
+    return jsonify({"ok": True})
+
+
+# ---------- Categorías ----------
+
+@admin_bp.get("/categorias")
+@login_requerido
+def listar_categorias():
+    categorias = Categoria.query.order_by(Categoria.nombre.asc()).all()
+    return jsonify([c.to_dict() for c in categorias])
+
+
+@admin_bp.post("/categorias")
+@login_requerido
+def crear_categoria():
+    data = request.get_json(silent=True) or {}
+    nombre = (data.get("nombre") or "").strip()
+    if not nombre:
+        return jsonify({"error": "El nombre de la categoría es obligatorio."}), 400
+
+    existente = Categoria.query.filter(db.func.lower(Categoria.nombre) == nombre.lower()).first()
+    if existente:
+        return jsonify({"error": f'Ya existe la categoría "{existente.nombre}".'}), 409
+
+    categoria = Categoria(nombre=nombre)
+    db.session.add(categoria)
+    db.session.commit()
+    return jsonify(categoria.to_dict()), 201
+
+
+@admin_bp.delete("/categorias/<int:categoria_id>")
+@login_requerido
+def eliminar_categoria(categoria_id):
+    categoria = Categoria.query.get_or_404(categoria_id)
+    en_uso = Producto.query.filter(db.func.lower(Producto.categoria) == categoria.nombre.lower()).count()
+    if en_uso > 0:
+        return (
+            jsonify({"error": f'No se puede eliminar: {en_uso} prenda(s) usan la categoría "{categoria.nombre}".'}),
+            409,
+        )
+    db.session.delete(categoria)
     db.session.commit()
     return jsonify({"ok": True})
 

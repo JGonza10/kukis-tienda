@@ -9,6 +9,7 @@ import ProductoDetalle from "./pages/ProductoDetalle";
 import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./pages/AdminLayout";
 import AdminInventario from "./pages/AdminInventario";
+import AdminCategorias from "./pages/AdminCategorias";
 import AdminApartados from "./pages/AdminApartados";
 import AdminCuenta from "./pages/AdminCuenta";
 import AdminUsuarios from "./pages/AdminUsuarios";
@@ -65,6 +66,7 @@ export default function App() {
         }
       >
         <Route path="inventario" element={<AdminInventario />} />
+        <Route path="categorias" element={<AdminCategorias />} />
         <Route path="apartados" element={<AdminApartados />} />
         <Route path="cuenta" element={<AdminCuenta />} />
         <Route path="usuarios" element={<AdminUsuarios />} />
