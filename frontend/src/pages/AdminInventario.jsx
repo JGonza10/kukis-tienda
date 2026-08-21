@@ -9,6 +9,7 @@ function FormularioNuevoProducto({ onCreado }) {
   const [categoria, setCategoria] = useState("");
   const [precio, setPrecio] = useState("");
   const [variantes, setVariantes] = useState([{ ...VARIANTE_VACIA }]);
+  const [fotos, setFotos] = useState([]);
   const [error, setError] = useState("");
   const [guardando, setGuardando] = useState(false);
 
@@ -32,8 +33,12 @@ function FormularioNuevoProducto({ onCreado }) {
         precio: Number(precio),
         variantes: variantes.filter((v) => v.talla && v.color),
       });
+      for (const foto of fotos) {
+        await api.subirImagen(producto.id, foto).catch((e) => setError(e.message));
+      }
       setNombre(""); setDescripcion(""); setCategoria(""); setPrecio("");
       setVariantes([{ ...VARIANTE_VACIA }]);
+      setFotos([]);
       onCreado(producto);
     } catch (e) {
       setError(e.message);
@@ -82,6 +87,19 @@ function FormularioNuevoProducto({ onCreado }) {
       <button type="button" className="boton boton-secundario" onClick={() => setVariantes((prev) => [...prev, { ...VARIANTE_VACIA }])} style={{ marginBottom: 14 }}>
         + Agregar talla/color
       </button>
+
+      <div className="campo">
+        <label>Fotos (opcional, se suben al guardar)</label>
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          multiple
+          onChange={(e) => setFotos(Array.from(e.target.files))}
+        />
+        {fotos.length > 0 && (
+          <span style={{ fontSize: 12, color: "#6B6259" }}>{fotos.length} foto(s) seleccionada(s)</span>
+        )}
+      </div>
 
       <button type="submit" className="boton boton-naranja" disabled={guardando}>
         {guardando ? "Guardando…" : "Guardar prenda"}
