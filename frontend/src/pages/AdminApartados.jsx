@@ -12,6 +12,7 @@ export default function AdminApartados() {
   const [apartados, setApartados] = useState(null);
   const [filtro, setFiltro] = useState("");
   const [error, setError] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
   function cargar() {
     api.adminApartados(filtro || undefined).then(setApartados).catch((e) => setError(e.message));
@@ -20,9 +21,13 @@ export default function AdminApartados() {
   useEffect(cargar, [filtro]);
 
   async function cambiarEstado(id, estado) {
+    setError("");
+    setMensaje("");
     try {
       await api.actualizarApartado(id, { estado });
       cargar();
+      setMensaje(`Estado actualizado a "${ETIQUETAS[estado]}".`);
+      setTimeout(() => setMensaje(""), 3000);
     } catch (e) {
       setError(e.message);
     }
@@ -41,6 +46,7 @@ export default function AdminApartados() {
       </div>
 
       {error && <p className="mensaje-error">{error}</p>}
+      {mensaje && <p className="mensaje-exito">{mensaje}</p>}
       {!apartados && <p className="centrado">Cargando…</p>}
       {apartados && apartados.length === 0 && <p className="centrado">No hay apartados con ese filtro.</p>}
 
