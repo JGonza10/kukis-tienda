@@ -190,7 +190,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   overflow: hidden;
 }
-.tarjeta-producto .imagen img { width: 100%; height: 100%; object-fit: cover; }
+.tarjeta-producto .imagen img { width: 100%; height: 100%; object-fit: contain; }
 .tarjeta-producto .cuerpo { padding: 16px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
 .tarjeta-producto .nombre { font-family: "Playfair Display", Georgia, serif; font-size: 15px; font-weight: 600; }
 .tarjeta-producto .precio { font-size: 14px; font-weight: 500; color: var(--acento-oscuro); }
@@ -249,7 +249,7 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
-.galeria .principal img { width: 100%; height: 100%; object-fit: cover; }
+.galeria .principal img { width: 100%; height: 100%; object-fit: contain; }
 .miniaturas { display: flex; gap: 8px; flex-wrap: wrap; }
 .miniaturas img {
   width: 56px; height: 56px; object-fit: cover; border-radius: 8px;
