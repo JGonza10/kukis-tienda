@@ -30,7 +30,7 @@ export default function Footer() {
           <span className="logo-marca">K</span>
           <span>Kukis</span>
         </span>
-        <a href="https://instagram.com/kukis" target="_blank" rel="noreferrer">
+        <a href="https://instagram.com/kuk.is76" target="_blank" rel="noreferrer">
           <IconoInstagram />
           @kukis
         </a>
